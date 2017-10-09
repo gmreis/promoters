@@ -1,21 +1,16 @@
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird');
 
-const host = 'localhost'
-const port = 27017
-const db = 'promoters'
+const host = process.env.DATABASE_HOST || 'localhost';
+const port = process.env.DATABASE_PORT || '27017';
+const db = process.env.DATABASE_DB || 'promoters';
 
-const connection = mongoose.connect(`mongodb://${host}:${port}/${db}`, {
+var auth = '';
+if(process.env.DATABASE_USER && process.env.DATABASE_PASS)
+    auth = `${process.env.DATABASE_USER}:${process.env.DATABASE_PASS}@`;
+
+const connection = mongoose.connect(`mongodb://${auth}${host}:${port}/${db}`, {
     useMongoClient: true,
-})
-
-/*
-connection.on('connected', function(err, result) {
-    if(err)
-        console.error('connected:', err);
-    else
-        console.log('connected');
 });
-*/
 
 module.exports = connection
