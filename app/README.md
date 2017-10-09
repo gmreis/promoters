@@ -1,1 +1,1 @@
-# promoters
+# App PROmoters Club
