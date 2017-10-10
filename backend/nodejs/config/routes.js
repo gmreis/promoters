@@ -34,8 +34,8 @@ module.exports = function(server) {
   // POST /api/user
   router.route('/user').post(userService.addUser)
 
-  // GET /api/user/:faceId
-  router.route('/user/:faceId').get(userService.getUser)
+  // GET /api/user/:userId
+  router.route('/user/:userId').get(userService.getUser)
 
   // PUT /api/user
   router.route('/user').put(userService.editUser)
@@ -54,7 +54,7 @@ module.exports = function(server) {
   // PUT /api/post
   router.route('/post').put(postService.editPost)
 
-  // DELETE /api/posts
+  // DELETE /api/post
 //  router.route('/post').delete(postService.deletePost)
 
   // GET /api/posts
@@ -62,9 +62,4 @@ module.exports = function(server) {
   router.route('/posts').get(postService.findAllPosts)
   router.route('/posts/:page').get(postService.findAllPosts)
   
-  // POST /api/post/addLike
-  router.route('/post/addLike').post(postService.addLike)
-
-  // POST /api/post/removeLike
-  router.route('/post/removeLike').post(postService.removeLike)
 }
