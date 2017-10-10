@@ -13,7 +13,7 @@ function addUser(req, res){
     });
 
     user.save().then(() => {
-        res.status(201).end(JSON.stringify({id: user._id}));
+        res.status(200).end(JSON.stringify({id: user._id}));
     }).catch(err => {
         console.error('save', err);
 
@@ -22,22 +22,20 @@ function addUser(req, res){
             errors[error] = (err.errors[error]['message']);
         };
 
-        res.status(409).end(JSON.stringify({errors}));
+        res.status(400).end(JSON.stringify({errors}));
     })
 
 }
 
-// GET /api/user/:userId
+// GET /api/user/:faceId
 function getUser(req, res){
 
-    const userId = req.params.userId;
-    
-    User.findById(userId).exec()
+    User.findOne({faceId: req.params.faceId}).exec()
         .then(user => {
             if(user) {
                 res.status(200).end(JSON.stringify({user}));
             } else {
-                res.status(404).end();
+                res.status(400).end();
             }
             
         }).catch(err => {
@@ -46,21 +44,21 @@ function getUser(req, res){
                 errors[error] = (err.errors[error]['message']);
             };
     
-            res.status(409).end(JSON.stringify({errors}));
+            res.status(400).end(JSON.stringify({errors}));
         })
 }
 
 // PUT /api/user
 function editUser(req, res){
 
-
-    if(req.body.hasOwnProperty('userId')) {
+    // TODO: Alterar para faceId como ID do usuario?
+    if(req.body.hasOwnProperty('faceId')) {
         
-        User.findById(req.body.userId).exec()
+        User.findById(req.body.faceId).exec()
         .then(user => {
             
             if(!user) {
-                res.status(404).end();
+                res.status(400).end();
                 return;
             }
 
@@ -79,7 +77,7 @@ function editUser(req, res){
                     errors[error] = (err.errors[error]['message']);
                 };
         
-                res.status(409).end(JSON.stringify({errors}));
+                res.status(400).end(JSON.stringify({errors}));
             })
             
         }).catch(err => {
@@ -88,11 +86,11 @@ function editUser(req, res){
                 errors[error] = (err.errors[error]['message']);
             };
     
-            res.status(409).end(JSON.stringify({errors}));
+            res.status(400).end(JSON.stringify({errors}));
         })
         
     } else {
-        res.status(409).end(JSON.stringify({errors}));
+        res.status(400).end(JSON.stringify({errors}));
     }    
     
 }
