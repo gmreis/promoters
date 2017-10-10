@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?><Db flnm="promoters" nm="promoters" ver="1.3.4">
+  <VerLbl/>
+  <VerNotes/>
+  <DefTblOpts/>
+  <DocFolder>D:\GitHub\promoters\backend\database</DocFolder>
+  <Sch Cm="" nm="schemaA">
+    <Tbl UsSo="1" nm="blog_posts">
+      <TblOpts/>
+      <Pk ClNs="postId" nm="pkblog_posts"/>
+      <Cl au="0" df="" nm="postId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="url" nu="0">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="comments">
+      <TblOpts/>
+      <Pk ClNs="commentId" nm="pkcomments"/>
+      <Cl au="1" df="" nm="commentId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="postId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="userId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="comment" nu="0">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_comments_posts" prLkCl="postId" upAc="3">
+        <PrTb mn="0" nm="posts" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="comments" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="postId" prCl="postId"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_comments_users" prLkCl="userId" upAc="3">
+        <PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="comments" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="userId" prCl="userId"/>
+      </Fk>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="likes">
+      <TblOpts/>
+      <Pk ClNs="likeId" nm="pklikes"/>
+      <Cl au="1" df="" nm="likeId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="postId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="userId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_likes_posts" prLkCl="postId" upAc="3">
+        <PrTb mn="0" nm="posts" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="likes" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="postId" prCl="postId"/>
+      </Fk>
+      <Fk deAc="3" nm="fk_likes_users" prLkCl="userId" upAc="3">
+        <PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="likes" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="userId" prCl="userId"/>
+      </Fk>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="photos">
+      <TblOpts/>
+      <Pk ClNs="photoId" nm="pkphotos"/>
+      <Cl au="0" df="" nm="photoId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="postId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="photo" nu="1">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_photos_posts" prLkCl="postId" upAc="3">
+        <PrTb mn="0" nm="posts" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="photos" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="postId" prCl="postId"/>
+      </Fk>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="posts">
+      <TblOpts/>
+      <Pk ClNs="postId" nm="pkposts"/>
+      <Cl au="1" df="" nm="postId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="userId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="comment" nu="1">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="type" nu="0">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="brand" nu="0">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="network" nu="0">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="store" nu="0">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="longitude" nu="0">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="latitude" nu="0">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="isChallenge" nu="0">
+        <DT arr="0" ds="Boolean" en="" id="16" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Fk deAc="3" nm="fk_posts_users" prLkCl="userId" upAc="3">
+        <PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="0"/>
+        <CdTb mn="1" nm="posts" oe="0" sch="schemaA" zr="1"/>
+        <ClPr cdCl="userId" prCl="userId"/>
+      </Fk>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <Tbl UsSo="1" nm="users">
+      <TblOpts/>
+      <Pk ClNs="userId" nm="pkusers"/>
+      <Cl au="0" df="" nm="userId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="faceId" nu="0">
+        <DT arr="0" ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="name" nu="0">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="email" nu="0">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="sexo" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="photo" nu="0">
+        <DT arr="0" ds="Text" en="" id="703" ln="null" sc="null" sg="1" un="0"/>
+      </Cl>
+      <Cl au="0" df="" nm="typeUser" nu="0">
+        <DT arr="0" ds="Integer" en="" id="4" ln="null" sc="null" sg="1" un="0"/>
+        <Cm>0 =&gt; usuário é um promoter
+1 =&gt; usuário é um vendedor</Cm>
+      </Cl>
+      <UniqueConstraints/>
+      <SchTrHis/>
+    </Tbl>
+    <CustomTypes/>
+  </Sch>
+  <Dgm nm="diagramA">
+    <RnCf ClkAct="true" FtSz="11" lkStgy="RightAngleStrategy" zm="1.0">
+      <VbCfg>
+        <Fg ky="Auto Number" vl="0"/>
+        <Fg ky="Check" vl="0"/>
+        <Fg ky="Comment" vl="0"/>
+        <Fg ky="Data Type" vl="1"/>
+        <Fg ky="Default" vl="0"/>
+        <Fg ky="ENUM Values" vl="0"/>
+        <Fg ky="Length" vl="1"/>
+        <Fg ky="Name" vl="1"/>
+        <Fg ky="Nullable" vl="0"/>
+        <Fg ky="Schema Name" vl="0"/>
+        <Fg ky="Signed" vl="0"/>
+      </VbCfg>
+    </RnCf>
+    <DiaProps>
+      <Show AllCols="1" FkCols="1" FkNms="1" PkCols="1"/>
+      <ErNotation>BarkerErNotation</ErNotation>
+      <DbTableRectangleFill>HeaderFooterFill</DbTableRectangleFill>
+      <svg path=""/>
+    </DiaProps>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="users" x="270" y="23"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="posts" x="273" y="197"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="likes" x="16" y="195"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="comments" x="578" y="195"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="photos" x="29" y="330"/>
+    <TbGl bkCl="ff6666ff" sch="schemaA" tbl="blog_posts" x="587" y="344"/>
+    <FkGl bkCl="ff000000" childEdge="WEST" nm="schemaA.comments.fk_comments_posts" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="466" x2="578" y1="236" y2="236"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="NORTH" nm="schemaA.comments.fk_comments_users" parentEdge="EAST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="444" x2="643" y1="91" y2="91"/>
+        <positionableLine lineRole="CHILD_LINE" x1="647" x2="647" y1="195" y2="95"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="EAST" nm="schemaA.likes.fk_likes_posts" parentEdge="WEST" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="273" x2="168" y1="228" y2="228"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="NORTH" nm="schemaA.likes.fk_likes_users" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="270" x2="88" y1="87" y2="87"/>
+        <positionableLine lineRole="CHILD_LINE" x1="84" x2="84" y1="195" y2="91"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="NORTH" nm="schemaA.photos.fk_photos_posts" parentEdge="WEST" positioner="TwoLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="PARENT_LINE" x1="273" x2="116" y1="304" y2="304"/>
+        <positionableLine lineRole="CHILD_LINE" x1="112" x2="112" y1="330" y2="308"/>
+      </positionableLines>
+    </FkGl>
+    <FkGl bkCl="ff000000" childEdge="NORTH" nm="schemaA.posts.fk_posts_users" parentEdge="SOUTH" positioner="OneLineUserLinkPositioner">
+      <positionableLines>
+        <positionableLine lineRole="SINGLE_LINE" x1="360" x2="360" y1="141" y2="197"/>
+      </positionableLines>
+    </FkGl>
+    <Notes/>
+    <Zones/>
+  </Dgm>
+  <RnmMgr NxRnmId="8">
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="users" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="1" nNm="userId" oNm="Id"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="likes" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="2" nNm="likeId" oNm="Id"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="posts" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="3" nNm="postId" oNm="Id"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="comments" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="4" nNm="commentId" oNm="Id"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="users" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="5" nNm="typeUser" oNm="tipoUsuario"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="photos" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="6" nNm="photoId" oNm="Id"/>
+    </RnmCh>
+    <RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_posts" SupCls="Schema" SupNme="schemaA">
+      <Rnm id="7" nNm="postId" oNm="Id"/>
+    </RnmCh>
+  </RnmMgr>
+  <DbDocOptionMgr>
+    <BasicOptionMgr>
+      <Name>db.doc.option.mgr</Name>
+      <BoolOpt lbl="Diagrams" nm="doc.diagrams" on="1" spl="0"/>
+      <BoolOpt lbl="Foreign Keys" nm="doc.fks" on="1" spl="0"/>
+      <BoolOpt lbl="Indexes" nm="doc.indexes" on="1" spl="0"/>
+      <BoolOpt lbl="Overwrite CSS File" nm="doc.overwrite.css" on="1" spl="0"/>
+      <BoolOpt lbl="Procedures" nm="doc.procs" on="1" spl="0"/>
+      <BoolOpt lbl="Schemas" nm="doc.schemas" on="1" spl="0"/>
+      <BoolOpt lbl="Sequences" nm="doc.sequences" on="1" spl="0"/>
+      <BoolOpt lbl="Tables" nm="doc.tables" on="1" spl="0"/>
+      <BoolOpt lbl="Triggers" nm="doc.triggers" on="1" spl="0"/>
+      <BoolOpt lbl="Views" nm="doc.views" on="1" spl="0"/>
+    </BasicOptionMgr>
+  </DbDocOptionMgr>
+  <OpenEditors>
+    <OpenEditor ClsNm="Diagram" fqn="null.diagramA" selected="1"/>
+  </OpenEditors>
+  <TreePaths>
+    <TreePath/>
+    <TreePath>/Schemas (1)</TreePath>
+    <TreePath>/Schemas (1)/schemaA</TreePath>
+    <TreePath>/Diagrams (1)</TreePath>
+  </TreePaths>
+  <SqlTexts/>
+</Db>

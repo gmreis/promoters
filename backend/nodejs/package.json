@@ -1,0 +1,21 @@
+{
+  "name": "promoters-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "loader.js",
+  "scripts": {
+    "start": "node loader.js"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.17.x",
+    "express": "^4.15.x",
+    "mongoose": "^4.11.3",
+    "mongoose-auto-increment": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "author": "Promoters",
+  "license": "ISC"
+}
