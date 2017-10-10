@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'CHALLENGE_TITLE' | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openModal()">
+        <ion-icon name="md-camera"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="content-challenge">
+    <img class="challenge-photo" padding src="assets/img/img/advance-card-bttf.png">
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col class="challenge-info">
+          <div class="challenge-icon">
+            <ion-icon name='md-pin'></ion-icon>
+          </div>
+          <div class="challenge-text">
+            <span>{{ 'CHALLENGEWORK_TYPE' | translate }}</span>
+            <span>PDV</span>
+          </div>
+        </ion-col>
+        <ion-col class="challenge-info">
+          <div class="challenge-icon">
+            <ion-icon name='md-pin'></ion-icon>
+          </div>
+          <div class="challenge-text">
+            <span>{{ 'CHALLENGE_SUPERMARKET' | translate }}</span>
+            <span>Hippo</span>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="challenge-info">
+          <div class="challenge-icon">
+            <ion-icon name='md-pin'></ion-icon>
+          </div>
+          <div class="challenge-text">
+            <span>{{ 'CHALLENGEWORK_BRAND' | translate }}</span>
+            <span>Isabela</span>
+          </div>
+        </ion-col>
+        <ion-col class="challenge-info">
+          <div class="challenge-icon">
+            <ion-icon name='md-pin'></ion-icon>
+          </div>
+          <div class="challenge-text">
+            <span>{{ 'CHALLENGEWORK_STORE' | translate }}</span>
+            <span>Hippo Coqueiros</span>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div class="challenge-buttons">
+      <button ion-button clear icon-only>
+        <ion-icon name="md-close-circle"></ion-icon>
+      </button>
+      <button ion-button clear icon-only >
+        <ion-icon name="md-checkmark-circle"></ion-icon>
+      </button>
+    </div>
+  </div>
+</ion-content>

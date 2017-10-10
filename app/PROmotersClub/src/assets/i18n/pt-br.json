@@ -1,7 +1,26 @@
 {
-  "WELCOME_INTRO": "App social de interação entre Promotores de Vendas",
+  "WELCOME_INTRO": "App social de interação entre",
+  "WELCOME_SUBINTRO": "Promotores de Vendas",
   "LOGIN": "Entrar com Facebook ",
   "TERMOS_POLITICA": "Termos de serviço e Politica de Privacidade",
+
+  "FEED_TITLE": "Feed",
+  "CHALLENGE_TITLE": "Desafio",
+  "INBOX_TITLE": "Mensagens",
+  "CONFIG_TITLE": "Configurações",
+  "PERFIL_TITLE": "Perfil",
+  "LOGOUT_TITLE": "Sair",
+
+  "CHALLENGEWORK_TYPE": "Tipo de Trabalho",
+  "CHALLENGE_SUPERMARKET": "Rede",
+  "CHALLENGEWORK_BRAND": "Marca",
+  "CHALLENGEWORK_STORE": "Loja",
+
+  "FEED_LIKES": "Curtidas",
+  "FEED_COMMENTS": "Comentarios",
+
+  "CONFIG_LANGUAGE": "Lingua",
+
 
   "BACK_BUTTON_TEXT": "Voltar"
 }

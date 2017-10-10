@@ -56,6 +56,7 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
+$menu-width: 200px;
 
 
 
@@ -63,8 +64,26 @@ $colors: (
 // --------------------------------------------------
 // Windows only Sass variables can go here
 
+$list-md-border-color: #B93B2D;
 
+.menu-inner .item {
+    background-color: #333333;
+    color: white;
+}
 
+.menu-inner > ion-header, 
+.menu-inner > ion-content, 
+.menu-inner > ion-footer {
+    background-color: #333333; 
+}
+
+.menu-logout{
+    position: fixed!important;
+    bottom: 2rem!important;
+}
+
+$toolbar-md-title-text-color: white;
+$toolbar-background: #B93B2D;
 
 // App Theme
 // --------------------------------------------------

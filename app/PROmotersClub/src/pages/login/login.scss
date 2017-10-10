@@ -1,7 +1,7 @@
 page-login {
 	.splash-bg {
     position: relative;
-    background: url('../assets/img/splashbg.png') no-repeat transparent;
+    background: url('../assets/img/bg_login.jpg') no-repeat transparent;
     background-size: cover;
     z-index: 1;
     background-repeat: repeat-x;
@@ -14,10 +14,13 @@ page-login {
   }
 
   .splash-info {
+    display: flex;
+    flex-direction: column;
     margin-top: 2rem;
     position: relative;
     z-index: 2;
     text-align: center;
+    color: white;
   }
   .splash-intro {
     font-size: 18px;
@@ -43,7 +46,7 @@ page-login {
     margin-top: 3rem;
   }
   .splash-button {
-    background: linear-gradient(to left,  #000 0%, #fff 100%);
+    background: linear-gradient(to left, #000080 0%, #1E90FF 100%);
   }
   .splash-icon-fb {
     margin-left: 1rem;

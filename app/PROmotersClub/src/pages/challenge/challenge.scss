@@ -1,0 +1,31 @@
+page-challenge {
+	.content-challenge{
+		display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	}
+
+	.challenge-photo{
+		height: 300px;
+	}
+	
+	.challenge-info{
+		display: flex;
+	  margin-left: 1rem;
+	}
+
+	.challenge-icon{
+		margin-right: 1rem;
+	}
+
+	.challenge-text > span:last-child{
+		display: flex;
+		flex-direction: column;
+		font-weight: bold;
+	}
+
+	.challenge-buttons{
+		text-align: center;
+	}
+
+}

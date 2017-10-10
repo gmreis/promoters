@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'FEED_TITLE' | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openModal()">
+        <ion-icon name="md-camera"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let feedItem of feedItems">
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{feedItem.avatarURL}}">
+      </ion-avatar>
+      <h2>{{feedItem.userName}}</h2>
+      <p><ion-icon name='md-pin'></ion-icon> {{feedItem.location}}</p>
+    </ion-item>
+
+    <img src="{{feedItem.imgURL}}">
+
+    <ion-row>
+      <ion-col>
+        <button ion-button color="primary" clear small icon-start style="text-transform: none;" >
+          <ion-icon name='thumbs-up'></ion-icon>
+          {{feedItem.likes}} {{ 'FEED_LIKES' | translate }}
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button color="primary" clear small icon-start style="text-transform: none;" >
+          <ion-icon name='text'></ion-icon>
+          {{feedItem.comments}} {{ 'FEED_COMMENTS' | translate }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>
