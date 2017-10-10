@@ -1,23 +1,24 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const commentSchema = new mongoose.Schema({
-    commentId: { type: number, required: true},
-    postId: { type: number, required: true},
-    userId: { type: number, required: true},
+    commentId: { type: Number, required: true},
+    postId: { type: Number, required: true},
+    userId: { type: Number, required: true},
     comment: { type: String, required: true},
 })
 
 const likeSchema = new mongoose.Schema({
-    likeId: { type: number, required: true},
-    postId: { type: number, required: true},
-    userId: { type: number, required: true},
+    likeId: { type: Number, required: true},
+    postId: { type: Number, required: true},
+    userId: { type: Number, required: true},
 })
 
 const postSchema = new mongoose.Schema({
-  postId: { type: number, required: true},
-  userId: { type: number, required: true},
-  comment: { type: String, required: true},
-  
+  postId: { type: Number},
+  userId: { type: Schema.Types.ObjectId, required: true, ref: 'Users'},
+  comment: { type: String},
+  /*
   type: { type: String, required: true},
   brand: { type: String, required: true},
   supermarket: { type: String, required: true},
@@ -26,14 +27,18 @@ const postSchema = new mongoose.Schema({
   longitude: { type: String, required: true},
   latitude: { type: String, required: true},
 
-  isChallenge: { type: boolean, required: true},
+  isChallenge: { type: Boolean},
 
   photos: [String],
-  likes: [{ type: ObjectId, ref: 'User'}],
+  likes: [{ type: Schema.Types.ObjectId, ref: 'Users'}],
   comments: [{
-    userId: { type: ObjectId, ref: 'User'},
+    faceId: { type: Schema.Types.ObjectId, ref: 'Users'},
     comment: { type: String, required: true},
   }]
+  */
+
+  likes: [{ type: Schema.Types.ObjectId, ref: 'Users'}],
+
 })
 
-module.exports = mongoose.model('Post', userSchema);
+module.exports = mongoose.model('Posts', postSchema);
