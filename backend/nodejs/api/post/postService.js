@@ -20,6 +20,7 @@ function addPost(req, res) {
                 throw 'Usuario não encontrado';
             
             newPost.userId = user._id;
+            newPost.photos = [ req.file.filename ];
 
             return newPost.save();
 
@@ -48,29 +49,44 @@ function addLike(req, res) {
     let _user;
 
     User.findOne({faceId: req.body.faceId}).exec()
+        // Busca Usuario que dará o Like
         .then(user => {
-            if(!user)
-                throw 'Usuario não encontrado';
-            
             _user = user;
             return Post.findById(req.body.postId).exec();
-        })
+
+        }, err => {  throw 'Usuario não encontrado'; })
+        // Busca Post que receberá o Like
         .then((post) => {
-            if(!post)
-                throw 'Post não encontrado';
             
+            let likes = post.likes.length;
             post.likes.addToSet(_user._id);
-            return post.save();
-        })
-        .then(() => {
-            res.status(200).end();
+
+            // Adiciona +1 Ponto para o Proprietario do Post
+            // Se o usuário já não tiver dado like para esse Post
+            if(post.likes.length > likes) {
+
+                return new Promise(resolve => {
+                    
+                    // Busca o dono do Post e adiciona +1 Ponto
+                    User.findById(post.userId).exec()
+                        .then(user => {
+
+                            user.points++;
+                            user.save()
+                            .then(user => resolve( post.save() ) );
+                        });
+                })
+                
+            }
+            
+            return new Promise(resolve => resolve(post));
+
+        }, err => { throw 'Post não encontrado'; })
+        .then( post => {
+            res.status(200).end(JSON.stringify({ likes: post.likes.length }));
         })
         .catch(err => {
-            var errors = {};
-            for (var error in err.errors) {
-                errors[error] = (err.errors[error]['message']);
-            };
-            res.status(400).end(JSON.stringify({errors}));
+            res.status(400).end(JSON.stringify({err}));
         })
 
 }
@@ -114,6 +130,7 @@ function removeLike(req, res) {
     
 }
 
+// TODO: editPost
 // PUT /api/posts
 function editPost(req, res) {
 
@@ -136,17 +153,20 @@ function editPost(req, res) {
 
 }
 
+// TODO: deletePost
 // DELETE /api/posts
 function deletePost(req, res) {
 
 }
 
+// TODO: findPostById
 // GET /api/posts/find/:id
 function findPostById(req, res) {
     const postId = req.params.id;
 
 }
 
+// TODO: findAllPosts
 // GET /api/posts
 // GET /api/posts/:page
 function findAllPosts(req, res) {

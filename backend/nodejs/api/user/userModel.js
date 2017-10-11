@@ -9,15 +9,16 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   sexo: { type: String, required: true },
   photo: { type: String, required: true },
-  birth: { type: Date },
-  position: { type: Number },
-  level: { type: Number }
+  birth: { type: Date, default: null },
+  position: { type: Number, default: 0 },
+  level: { type: Number, default: 0 },
+  points: { type: Number, default: 0 }
 }, { timestamps: true });
 
 
 userSchema.virtual('getUser').get(function () {
 
-  let user = {
+  return {
       faceId: this.faceId,
       name: this.name,
       sexo: this.sexo,
@@ -25,12 +26,8 @@ userSchema.virtual('getUser').get(function () {
       birth: this.birth,
       position: this.position,
       level: this.level,
+      points: this.points
     };
-
-  user.points = 123;
-
-  return user;
-
 });
 
 const User = mongoose.model('User', userSchema);

@@ -16,15 +16,20 @@ const postSchema = new mongoose.Schema({
   
   longitude: { type: String, required: true},
   latitude: { type: String, required: true},
-
-  isChallenge: { type: Boolean},
-
-  photos: [String],
   */
+  
+  isChallenge: { type: Boolean},
+  
+  photos: { type: [String], validate: [photosMin, '{PATH} deve ter no minimo 1']},
+  
 
   likes: [{ type: Schema.Types.ObjectId, ref: 'Users'}],
   comments: [commentSchema]
 
 })
+
+function photosMin(val) {
+  return val.length > 0;
+}
 
 module.exports = mongoose.model('Posts', postSchema);

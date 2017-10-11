@@ -26,7 +26,8 @@ function login(req, res){
                     photo: req.body.photo,
                     birth: null,
                     position: 0,
-                    level: 0
+                    level: 0,
+                    points: 0
                 });
                 
                 return User.create(user);
@@ -36,7 +37,6 @@ function login(req, res){
 
         }).then(user => {
             res.status(200).end(JSON.stringify(user.getUser));
-
         })
         .catch(err => {
             console.log(err);
