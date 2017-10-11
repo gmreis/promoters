@@ -24,15 +24,19 @@ function login(req, res){
                     name: req.body.name,
                     sexo: req.body.sexo,
                     photo: req.body.photo,
+                    birth: null,
+                    position: 0,
+                    level: 0
                 });
                 
                 return User.create(user);
             }
-
-            res.status(200).end(JSON.stringify({user}));
+            
+            return new Promise(resolve => resolve(user));
 
         }).then(user => {
-            res.status(200).end(JSON.stringify({user}));
+            res.status(200).end(JSON.stringify(user.getUser));
+
         })
         .catch(err => {
             console.log(err);

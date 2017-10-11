@@ -39,9 +39,6 @@ module.exports = function(server) {
   // PUT /api/user
   router.route('/user').put(userService.editUser)
 
-  // POST /api/users/authenticate
-//  router.route('/users/authenticate').post(userService.authenticate)
-
   const postService = require('../api/post/postService')
 
   // POST /api/post
