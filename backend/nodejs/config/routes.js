@@ -32,7 +32,7 @@ module.exports = function(server) {
   const userService = require('../api/user/userService')
 
   // POST /api/user
-  router.route('/user').post(userService.addUser)
+  router.route('/user').post(userService.login)
 
   // GET /api/user/:faceId
   router.route('/user/:faceId').get(userService.getUser)

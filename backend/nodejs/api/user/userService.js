@@ -1,19 +1,21 @@
 const User = require('./userModel');
 
 // POST /api/user
-function addUser(req, res){
+function login(req, res){
 
+    // TODO: birth
     var user = new User({
         faceId: req.body.faceId,
         name: req.body.name,
-        email: req.body.email,
         sexo: req.body.sexo,
         photo: req.body.photo,
-        typeUser: req.body.typeUser,
+        birth: req.body.birth,
+        position: req.body.position,
+        level: req.body.level
     });
 
     user.save().then(() => {
-        res.status(200).end(JSON.stringify({id: user._id}));
+        res.status(200).end(JSON.stringify({user}));
     }).catch(err => {
         console.error('save', err);
 
@@ -95,4 +97,4 @@ function editUser(req, res){
     
 }
 
-module.exports = { addUser, getUser, editUser }
+module.exports = { login, getUser, editUser }
