@@ -5,7 +5,7 @@ function getPoints() {
 }
 
 const userSchema = new mongoose.Schema({
-  faceId: { type: Number, required: true, index: {unique: true} },
+  faceId: { type: String, required: true, index: {unique: true} },
   name: { type: String, required: true },
   sexo: { type: String, required: true },
   photo: { type: String, required: true },
@@ -30,7 +30,7 @@ userSchema.virtual('getUser').get(function () {
   user.points = 123;
 
   return user;
-  
+
 });
 
 const User = mongoose.model('User', userSchema);
