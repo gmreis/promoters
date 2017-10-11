@@ -1,43 +1,58 @@
 const User = require('./userModel');
 
 // POST /api/user
-function addUser(req, res){
+function login(req, res){
 
-    var user = new User({
-        faceId: req.body.faceId,
-        name: req.body.name,
-        email: req.body.email,
-        sexo: req.body.sexo,
-        photo: req.body.photo,
-        typeUser: req.body.typeUser,
-    });
 
-    user.save().then(() => {
-        res.status(201).end(JSON.stringify({id: user._id}));
-    }).catch(err => {
-        console.error('save', err);
+    // TODO: Alterar para faceId como ID do usuario?
+    if(req.body.hasOwnProperty('faceId')) {
+        
+        User.findOne({faceId: req.body.faceId}) .exec()
+        .then(user => {
 
-        var errors = {};
-        for (var error in err.errors) {
-            errors[error] = (err.errors[error]['message']);
-        };
+            if(!user) {
+                console.log('Antes: ', user);
+                user = new User({
+                    faceId: req.body.faceId,
+                    name: req.body.name,
+                    sexo: req.body.sexo,
+                    photo: req.body.photo,
+                });
+                console.log('Depois', user);
+                
+                return User.create(user);
+            }
 
-        res.status(409).end(JSON.stringify({errors}));
-    })
+            res.status(200).end(JSON.stringify({user}));
+
+        }).then(user => {
+            res.status(200).end(JSON.stringify({user}));
+        })
+        .catch(err => {
+            console.log(err);
+            var errors = {};
+            for (var error in err.errors) {
+                errors[error] = (err.errors[error]['message']);
+            };
+    
+            res.status(400).end(JSON.stringify({errors}));
+        })
+        
+    } else {
+        res.status(400).end(JSON.stringify({errors}));
+    }
 
 }
 
-// GET /api/user/:userId
+// GET /api/user/:faceId
 function getUser(req, res){
 
-    const userId = req.params.userId;
-    
-    User.findById(userId).exec()
+    User.findOne({faceId: req.params.faceId}).exec()
         .then(user => {
             if(user) {
                 res.status(200).end(JSON.stringify({user}));
             } else {
-                res.status(404).end();
+                res.status(400).end();
             }
             
         }).catch(err => {
@@ -46,21 +61,21 @@ function getUser(req, res){
                 errors[error] = (err.errors[error]['message']);
             };
     
-            res.status(409).end(JSON.stringify({errors}));
+            res.status(400).end(JSON.stringify({errors}));
         })
 }
 
 // PUT /api/user
 function editUser(req, res){
 
-
-    if(req.body.hasOwnProperty('userId')) {
+    // TODO: Alterar para faceId como ID do usuario?
+    if(req.body.hasOwnProperty('faceId')) {
         
-        User.findById(req.body.userId).exec()
+        User.findById(req.body.faceId).exec()
         .then(user => {
             
             if(!user) {
-                res.status(404).end();
+                res.status(400).end();
                 return;
             }
 
@@ -79,7 +94,7 @@ function editUser(req, res){
                     errors[error] = (err.errors[error]['message']);
                 };
         
-                res.status(409).end(JSON.stringify({errors}));
+                res.status(400).end(JSON.stringify({errors}));
             })
             
         }).catch(err => {
@@ -88,13 +103,13 @@ function editUser(req, res){
                 errors[error] = (err.errors[error]['message']);
             };
     
-            res.status(409).end(JSON.stringify({errors}));
+            res.status(400).end(JSON.stringify({errors}));
         })
         
     } else {
-        res.status(409).end(JSON.stringify({errors}));
+        res.status(400).end(JSON.stringify({errors}));
     }    
     
 }
 
-module.exports = { addUser, getUser, editUser }
+module.exports = { login, getUser, editUser }

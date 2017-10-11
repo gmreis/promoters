@@ -6,16 +6,15 @@ module.exports = function(server) {
   server.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
 
-
     //console.log("Olá Mundo...");
     // Website you wish to allow to connect
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 
     // Request headers you wish to allow
-    //res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
@@ -32,10 +31,10 @@ module.exports = function(server) {
   const userService = require('../api/user/userService')
 
   // POST /api/user
-  router.route('/user').post(userService.addUser)
+  router.route('/user').post(userService.login)
 
-  // GET /api/user/:userId
-  router.route('/user/:userId').get(userService.getUser)
+  // GET /api/user/:faceId
+  router.route('/user/:faceId').get(userService.getUser)
 
   // PUT /api/user
   router.route('/user').put(userService.editUser)
@@ -54,7 +53,7 @@ module.exports = function(server) {
   // PUT /api/post
   router.route('/post').put(postService.editPost)
 
-  // DELETE /api/post
+  // DELETE /api/posts
 //  router.route('/post').delete(postService.deletePost)
 
   // GET /api/posts
@@ -62,4 +61,20 @@ module.exports = function(server) {
   router.route('/posts').get(postService.findAllPosts)
   router.route('/posts/:page').get(postService.findAllPosts)
   
+  // POST /api/post/addLike
+  router.route('/post/addLike').post(postService.addLike)
+
+  // POST /api/post/removeLike
+  router.route('/post/removeLike').post(postService.removeLike)
+
+  const commentService = require('../api/comment/commentService')
+
+  // POST /api/comment
+  router.route('/comment').post(commentService.addComment)
+  
+  // PUT /api/comment
+  router.route('/comment').put(commentService.editComment)
+
+  // DELETE /api/comment
+  router.route('/comment').delete(commentService.removeComment)
 }

@@ -1,19 +1,117 @@
+const Post = require('./postModel');
+const User = require('./../user/userModel');
+
 // POST /api/posts
+/*
+    {
+        faceId: Number,
+        comment: Text
+    }
+*/
 function addPost(req, res) {
 
-    var image = '';
-    if (req.body.hasOwnProperty('image'))
-        image = req.body.image;
+    var newPost = new Post({
+        comment: req.body.comment,
+    });    
 
-    var newPost = {
-        "title": req.body.title,
-        "description": req.body.description,
-        "keys": req.body.keys,
-        "author": req.body.author,
-        "image": image,
-        "date_create": date_create
-    };
+    User.findOne({faceId: req.body.faceId}).exec()
+        .then(user => {
+            if(!user)
+                throw 'Usuario não encontrado';
+            
+            newPost.userId = user._id;
 
+            return newPost.save();
+
+        })
+        .then(() => {
+            res.status(200).end(JSON.stringify(newPost));
+        })
+        .catch(err => {
+            var errors = {};
+            for (var error in err.errors) {
+                errors[error] = (err.errors[error]['message']);
+            };
+            res.status(400).end(JSON.stringify({errors}));
+        })
+}
+
+// POST /api/posts/addLike
+/*
+    {
+        faceId: Number,
+        postId: Text
+    }
+*/
+function addLike(req, res) {
+
+    let _user;
+
+    User.findOne({faceId: req.body.faceId}).exec()
+        .then(user => {
+            if(!user)
+                throw 'Usuario não encontrado';
+            
+            _user = user;
+            return Post.findById(req.body.postId).exec();
+        })
+        .then((post) => {
+            if(!post)
+                throw 'Post não encontrado';
+            
+            post.likes.addToSet(_user._id);
+            return post.save();
+        })
+        .then(() => {
+            res.status(200).end();
+        })
+        .catch(err => {
+            var errors = {};
+            for (var error in err.errors) {
+                errors[error] = (err.errors[error]['message']);
+            };
+            res.status(400).end(JSON.stringify({errors}));
+        })
+
+}
+
+// POST /api/posts/removeLike
+/*
+    {
+        faceId: Number,
+        postId: Text
+    }
+*/
+function removeLike(req, res) {
+    
+    let _user;
+
+    User.findOne({faceId: req.body.faceId}).exec()
+        .then(user => {
+            if(!user)
+                throw 'Usuario não encontrado';
+            
+            _user = user;
+            return Post.findById(req.body.postId).exec();
+        })
+        .then((post) => {
+            if(!post)
+                throw 'Post não encontrado';
+            
+            post.likes.pull(_user._id);
+            return post.save();
+        })
+        .then(() => {
+            res.status(200).end();
+        })
+        .catch(err => {
+            var errors = {};
+            for (var error in err.errors) {
+                errors[error] = (err.errors[error]['message']);
+            };
+            res.status(400).end(JSON.stringify({errors}));
+        })
+    
 }
 
 // PUT /api/posts
@@ -92,4 +190,8 @@ function findAllPosts(req, res) {
 
 }
 
-module.exports = { addPost, editPost, deletePost, findPostById, findAllPosts }
+module.exports = { 
+    addPost, editPost, deletePost,
+    addLike, removeLike, 
+    findPostById,
+    findAllPosts }

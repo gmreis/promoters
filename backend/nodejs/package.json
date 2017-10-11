@@ -10,8 +10,7 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.17.x",
     "express": "^4.15.x",
-    "mongoose": "^4.11.3",
-    "mongoose-auto-increment": "^5.0.1"
+    "mongoose": "^4.11.3"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
