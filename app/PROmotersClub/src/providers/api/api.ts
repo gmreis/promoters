@@ -1,9 +1,11 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class Api {
-  url: string = 'https://example.com/api/v1';
+  // url: string = 'https://skyfall-blog-dev.mybluemix.net/api';
+  url: string = 'http://gmreis-eng-br.umbler.net/api';
 
   constructor(public http: HttpClient) {
   }

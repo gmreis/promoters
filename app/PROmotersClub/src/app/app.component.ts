@@ -8,6 +8,7 @@ import { FeedPage } from '../pages/feed/feed';
 import { ChallengePage } from '../pages/challenge/challenge';
 import { LoginPage } from '../pages/login/login';
 import { SettingsPage } from '../pages/settings/settings';
+import { PerfilPage } from '../pages/perfil/perfil';
 
 import { SessionProvider } from '../providers/session/session';
 import { LocalDb } from '../providers/local-db/local-db';
@@ -21,7 +22,7 @@ import { Facebook } from '@ionic-native/facebook';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = FeedPage;
+  rootPage: any = LoginPage;
 
   pages: Array<{title: string, icone: string, component: any}>;
 
@@ -46,9 +47,9 @@ export class MyApp {
     this.pages = [
       { title: 'FEED_TITLE', icone: 'md-home',component: FeedPage },
       { title: 'CHALLENGE_TITLE', icone: 'md-checkmark', component: ChallengePage },
-      { title: 'INBOX_TITLE', icone: 'ios-filing-outline', component: SettingsPage },
+      { title: 'INBOX_TITLE', icone: 'ios-filing-outline', component: FeedPage },
       { title: 'CONFIG_TITLE', icone: 'md-settings', component: SettingsPage },
-      { title: 'PERFIL_TITLE', icone: 'md-person', component: FeedPage }
+      { title: 'PERFIL_TITLE', icone: 'md-person', component: PerfilPage }
     ];
 
   }
