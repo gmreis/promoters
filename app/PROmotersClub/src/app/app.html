@@ -1,17 +1,20 @@
 <ion-menu [content]="content">
   <ion-header>
-      <ion-avatar class="menu-avatar">
-        <img src="../assets/img/logo-temp.png" class="menu-avatar">
+      <ion-avatar>
+        <img src="../assets/img/persona.png" class="menu-avatar">
       </ion-avatar>
   </ion-header>
 
   <ion-content>
     <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+      <button menuClose ion-item detail-none *ngFor="let p of pages" (click)="openPage(p)">
+      <div>
         <ion-icon name="{{p.icone}}" item-start></ion-icon>{{p.title | translate}}
+    </div>
+
       </button>
     </ion-list>
-    <button menuClose ion-item no-lines class="menu-logout" (click)="logoutFacebook()">
+    <button menuClose ion-item no-lines detail-none class="menu-logout" (click)="logoutFacebook()">
         <ion-icon name="ios-log-out" item-start></ion-icon>{{'LOGOUT_TITLE' | translate}}
     </button>
   </ion-content>

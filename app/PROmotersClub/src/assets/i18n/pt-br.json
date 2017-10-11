@@ -13,11 +13,19 @@
 
   "CHALLENGEWORK_TYPE": "Tipo de Trabalho",
   "CHALLENGE_SUPERMARKET": "Rede",
-  "CHALLENGEWORK_BRAND": "Marca",
-  "CHALLENGEWORK_STORE": "Loja",
+  "CHALLENGE_BRAND": "Marca",
+  "CHALLENGE_STORE": "Loja",
+  "CHALLENGE_BUTTON": "Publicar",
+
 
   "FEED_LIKES": "Curtidas",
   "FEED_COMMENTS": "Comentarios",
+
+  "PERFIL_MEMBER": "Membro desde",
+  "PERFIL_LEVEL": "Nível",
+  "PERFIL_POSITION": "Posição",
+  "PERFIL_POINTS": "Seus pontos",
+
 
   "CONFIG_LANGUAGE": "Lingua",
 

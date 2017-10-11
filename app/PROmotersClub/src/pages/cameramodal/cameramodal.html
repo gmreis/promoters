@@ -1,0 +1,37 @@
+<ion-header>
+        <ion-buttons right>
+            <button color="dark" ion-button clear icon-only (click)="dismiss()">
+                <ion-icon name="close-circle"></ion-icon>
+            </button>
+        </ion-buttons>
+</ion-header>
+<ion-content padding class="mapmodal_content">
+    <div class="button-photo">
+      <ion-avatar>
+          <img src="../../assets/img/img/avatar-yoda.png" (click)="testeCam()">
+      </ion-avatar>
+    </div>
+    <div class="tender-form">
+      <div class="tender-form__item">
+        <label for="work_type">{{ 'CHALLENGEWORK_TYPE' | translate }}</label>
+        <input id="work_type" name="work_type" type="text" autofocus="autofocus" />
+      </div>
+      <div class="tender-form__item">
+        <label for="market_net">{{ 'CHALLENGE_SUPERMARKET' | translate }}</label>
+        <input id="market_net" name="market_net" type="text" />
+      </div>
+      <div class="tender-form__item">
+        <label for="brand">{{ 'CHALLENGE_BRAND' | translate }}</label>
+        <input id="brand" name="brand" type="text" />
+      </div>
+      <div class="tender-form__item">
+        <label for="store">{{ 'CHALLENGE_STORE' | translate }}</label>
+        <input id="store" name="store" type="text" />
+      </div>
+
+      <button type="submit" class="tender-form__submit">
+        {{ 'CHALLENGE_BUTTON' | translate }}
+      </button>
+    </div>   
+</ion-content>
+

@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'PERFIL_TITLE' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pefil_content">
+  <div class="perfil_header">
+    <ion-avatar>
+      <img src="{{user.photo}}" class="perfil__img">
+    </ion-avatar>
+    <div class="perfil_nome">
+      <span>{{user.name}}</span>
+      <span>{{'PERFIL_MEMBER' | translate}} {{user.memberDate}}</span>
+    </div>
+  </div>
+
+  <ion-item no-lines color="black">
+     <div class="perfil_rank">
+      <span>{{'PERFIL_LEVEL' | translate}}:</span>   <span>{{user.level}}</span>
+    </div>
+    <div class="perfil_rank">
+      <span>{{'PERFIL_POSITION' | translate}}:</span><span>{{user.position}}</span>
+    </div>
+    <div class="perfil_rank">
+      <span>{{'PERFIL_POINTS' | translate}}:</span>  <span>{{user.points}}</span>
+    </div>
+  </ion-item>
+  
+  <ion-list>
+    <ion-item color="black">
+      <div class="perfil_rank_item">
+        <div class="item_img">
+          <ion-avatar>
+            <img src="../../assets/img/img/avatar-yoda.png">
+          </ion-avatar>
+        </div>
+        <div class="item_text">
+          <h2>Cher</h2>
+          <p>Ugh. As if.</p>
+        </div>
+      </div>
+    </ion-item>
+    <ion-item color="black">
+      <div class="perfil_rank_item">
+        <div class="item_img">
+          <ion-avatar>
+            <img src="../../assets/img/img/avatar-yoda.png">
+          </ion-avatar>
+        </div>
+        <div class="item_text">
+          <h2>Cher</h2>
+          <p>Ugh. As if.</p>
+        </div>
+      </div>
+    </ion-item>
+    <ion-item color="black">
+      <div class="perfil_rank_item">
+        <div class="item_img">
+          <ion-avatar>
+            <img src="../../assets/img/img/avatar-yoda.png">
+          </ion-avatar>
+        </div>
+        <div class="item_text">
+          <h2>Cher</h2>
+          <p>Ugh. As if.</p>
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

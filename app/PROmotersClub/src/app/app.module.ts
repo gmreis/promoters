@@ -10,6 +10,9 @@ import { FeedPage } from '../pages/feed/feed';
 import { ChallengePage } from '../pages/challenge/challenge';
 import { LoginPage } from '../pages/login/login';
 import { SettingsPage } from '../pages/settings/settings';
+import { CameramodalPage } from '../pages/cameramodal/cameramodal';
+import { PerfilPage } from '../pages/perfil/perfil';
+
 
 import { LocalDb } from '../providers/local-db/local-db';
 import { Api } from '../providers/api/api';
@@ -19,6 +22,7 @@ import { Facebook } from '@ionic-native/facebook';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
+import { Camera } from '@ionic-native/camera';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -32,7 +36,9 @@ export function createTranslateLoader(http: HttpClient) {
     FeedPage,
     ChallengePage,
     SettingsPage,
-    LoginPage
+    LoginPage,
+    PerfilPage,
+    CameramodalPage
   ],
   imports: [
     BrowserModule,
@@ -54,11 +60,14 @@ export function createTranslateLoader(http: HttpClient) {
     FeedPage,
     ChallengePage,
     SettingsPage,
-    LoginPage
+    LoginPage,
+    PerfilPage,
+    CameramodalPage
   ],
   providers: [
     StatusBar,
     Facebook,
+    Camera,
     SplashScreen,
     Api,
     SessionProvider,
