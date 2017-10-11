@@ -1,8 +1,15 @@
 const User = require('./userModel');
 
 // POST /api/user
+/*
+    {
+        faceId: Number
+        name: Text,
+        sexo: Text,
+        photo: Text
+    }
+*/
 function login(req, res){
-
 
     // TODO: Alterar para faceId como ID do usuario?
     if(req.body.hasOwnProperty('faceId')) {
@@ -11,14 +18,13 @@ function login(req, res){
         .then(user => {
 
             if(!user) {
-                console.log('Antes: ', user);
+                
                 user = new User({
                     faceId: req.body.faceId,
                     name: req.body.name,
                     sexo: req.body.sexo,
                     photo: req.body.photo,
                 });
-                console.log('Depois', user);
                 
                 return User.create(user);
             }
@@ -45,6 +51,7 @@ function login(req, res){
 }
 
 // GET /api/user/:faceId
+// PARAMS = faceId: Number
 function getUser(req, res){
 
     User.findOne({faceId: req.params.faceId}).exec()
@@ -66,12 +73,22 @@ function getUser(req, res){
 }
 
 // PUT /api/user
+/*
+    {
+        faceId: Number
+        name: Text,
+        sexo: Text,
+        photo: Text,
+        birth: Date { YYYY-MM-DD }
+    }
+*/
 function editUser(req, res){
 
-    // TODO: Alterar para faceId como ID do usuario?
     if(req.body.hasOwnProperty('faceId')) {
         
-        User.findById(req.body.faceId).exec()
+        let _user;
+        
+        User.findOne({faceId: req.body.faceId}).exec()
         .then(user => {
             
             if(!user) {
@@ -79,25 +96,24 @@ function editUser(req, res){
                 return;
             }
 
-            user.faceId = req.body.faceId;
-            user.name = req.body.name;
-            user.email = req.body.email;
-            user.sexo = req.body.sexo;
-            user.photo = req.body.photo;
-            user.typeUser = req.body.typeUser;
+            _user = user;
 
-            user.save().then(() => {
-                res.status(200).end(JSON.stringify({id: user._id}));
-            }).catch(err => {
-                var errors = {};
-                for (var error in err.errors) {
-                    errors[error] = (err.errors[error]['message']);
-                };
-        
-                res.status(400).end(JSON.stringify({errors}));
-            })
-            
-        }).catch(err => {
+            _user.name = req.body.name;
+            _user.sexo = req.body.sexo;
+            _user.photo = req.body.photo;
+
+            if(req.body.hasOwnProperty('birth') ) {
+                _user.birth = req.body.birth;
+            }
+
+            return _user.save();
+        }, () => {
+            res.status(400).end(JSON.stringify({errors: "Usuário não encontrado!"}));
+        })
+        .then(() => {
+            res.status(200).end(JSON.stringify({_user}));
+        })
+        .catch(err => {
             var errors = {};
             for (var error in err.errors) {
                 errors[error] = (err.errors[error]['message']);
@@ -107,7 +123,7 @@ function editUser(req, res){
         })
         
     } else {
-        res.status(400).end(JSON.stringify({errors}));
+        res.status(400).end();
     }    
     
 }
