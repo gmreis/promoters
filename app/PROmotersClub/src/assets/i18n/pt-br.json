@@ -5,16 +5,19 @@
   "TERMOS_POLITICA": "Termos de serviço e Politica de Privacidade",
 
   "FEED_TITLE": "Feed",
-  "CHALLENGE_TITLE": "Desafio",
+  "CHALLENGE_TITLE": "PROMov Club",
   "INBOX_TITLE": "Mensagens",
   "CONFIG_TITLE": "Configurações",
   "PERFIL_TITLE": "Perfil",
   "LOGOUT_TITLE": "Sair",
 
-  "CHALLENGEWORK_TYPE": "Tipo de Trabalho",
+  "CHALLENGE_CHOOSE_PHOTO": "Escolha uma foto",
+  "CHALLENGE_WORKTYPE": "Tipo de Trabalho",
   "CHALLENGE_SUPERMARKET": "Rede",
   "CHALLENGE_BRAND": "Marca",
   "CHALLENGE_STORE": "Loja",
+  "CHALLENGE_CHECKBOX": "Publicar no PROMov Club",
+
   "CHALLENGE_BUTTON": "Publicar",
 
 
@@ -28,6 +31,19 @@
 
 
   "CONFIG_LANGUAGE": "Lingua",
+  "M_JAN": "Jan",
+  "M_FEB": "Fev",
+  "M_MAR": "Mar",
+  "M_APRIL": "Abril",
+  "M_May": "Maio",
+  "M_JUNE": "Jun",
+  "M_JULY": "Jul",
+  "M_AUGUST": "Ago",
+  "M_SEPTEMBER": "Set",
+  "M_OCTOBER": "Out",
+  "M_NOVEMBER": "Nov",
+  "M_DECEMBER": "Dez",
+
 
 
   "BACK_BUTTON_TEXT": "Voltar"
