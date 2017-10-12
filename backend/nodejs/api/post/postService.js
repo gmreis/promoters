@@ -183,6 +183,7 @@ function getFeeds(req, res) {
     
     Post.aggregate()
         .match({ 'userId': { '$ne': mongoose.Types.ObjectId('59de6e2ee736f80b34a34c74') } } )
+        .sort({createdAt: -1})
         .skip( (page - 1) * limit ).limit(limit)
         .exec()
         .then(posts => {

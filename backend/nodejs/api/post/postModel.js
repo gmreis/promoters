@@ -23,7 +23,7 @@ const postSchema = new mongoose.Schema({
   likes: [{ type: Schema.Types.ObjectId, ref: 'Users'}],
   comments: [commentSchema]
 
-})
+}, { timestamps: true });
 
 function photosMin(val) {
   return val.length > 0;
