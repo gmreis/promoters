@@ -19,7 +19,6 @@ module.exports = function(server) {
   server.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
 
-    //console.log("Olá Mundo...");
     // Website you wish to allow to connect
     res.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -68,8 +67,8 @@ module.exports = function(server) {
 
   // GET /api/posts
   // GET /api/posts/:page
-  router.route('/posts').get(postService.findAllPosts)
-  router.route('/posts/:page').get(postService.findAllPosts)
+  router.route('/feeds').get(postService.getFeeds)
+  router.route('/feeds/:page').get(postService.getFeeds)
   
   // POST /api/post/addLike
   router.route('/post/addLike').post(postService.addLike)

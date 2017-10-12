@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
 const Post = require('./postModel');
 const User = require('./../user/userModel');
 
@@ -169,51 +172,34 @@ function findPostById(req, res) {
 }
 
 // TODO: findAllPosts
-// GET /api/posts
-// GET /api/posts/:page
-function findAllPosts(req, res) {
+// GET /api/feeds
+// GET /api/feeds/:page
+function getFeeds(req, res) {
 
     const limit = 5;
 
     var page = parseInt(req.params.page) || 1;
     page = page < 1 ? 1 : page;
-
-    connection.view('viewPost', 'listAll',
-        { limit: limit, skip: ((page - 1) * limit), reduce: false },
-        function (err, body) {
-            if (err) {
-                res.status(400).end();
-                return console.log('[posts.find] ', err.message);
-            }
-
-            var posts = [];
-            for (var i = 0; i < body.rows.length; i++) {
-
-                var post = {
-                    "_id": body.rows[i].key._id,
-                    "title": body.rows[i].key.title,
-                    "description": body.rows[i].key.description,
-                    "keys": body.rows[i].key.keys,
-                    "author": body.rows[i].key.author,
-                    "image": body.rows[i].key.image,
-                    "date_create": body.rows[i].key.date_create
-                };
-
-                if (typeof post.description === 'string') {
-                    post.description = post.description.substring(0, 100);
-                }
-
-                posts.push(post);
-            }
-            //console.log('POSTS:', posts);
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).end(JSON.stringify({ total_rows: body.total_rows, rows: posts }));
+    
+    Post.aggregate()
+        .match({ 'userId': { '$ne': mongoose.Types.ObjectId('59de6e2ee736f80b34a34c74') } } )
+        .skip( (page - 1) * limit ).limit(limit)
+        .exec()
+        .then(posts => {
+            res.status(200).end(JSON.stringify({ posts }));
+        })
+        .catch(err => {
+            var errors = {};
+            for (var error in err.errors) {
+                errors[error] = (err.errors[error]['message']);
+            };
+            res.status(400).end(JSON.stringify({errors}));
         });
-
+    
 }
 
 module.exports = { 
     addPost, editPost, deletePost,
     addLike, removeLike, 
     findPostById,
-    findAllPosts }
+    getFeeds }
