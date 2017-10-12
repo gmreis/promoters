@@ -172,8 +172,8 @@ function findPostById(req, res) {
 }
 
 // TODO: findAllPosts
-// GET /api/feeds
-// GET /api/feeds/:page
+// GET /api/feeds/:userId
+// GET /api/feeds/:userId/:page
 function getFeeds(req, res) {
 
     const limit = 5;
@@ -182,7 +182,28 @@ function getFeeds(req, res) {
     page = page < 1 ? 1 : page;
     
     Post.aggregate()
-        .match({ 'userId': { '$ne': mongoose.Types.ObjectId('59de6e2ee736f80b34a34c74') } } )
+        .project({ 
+            userId: 1, 
+            userName: 1,
+            
+            isChallenge: 1,
+            photos: 1,
+
+            type: 1,
+            brand: 1,
+            supermarket: 1,
+            store: 1,
+
+            longitude: 1,
+            latitude: 1,
+
+            likes: { '$size': '$likes'}, 
+            comments: 1,
+            
+            createdAt: 1, 
+        })
+        .match({ 'userId': { '$ne': mongoose.Types.ObjectId(req.params.userId) } } )
+//        .group({ _id: '$_id', gostaram: { '$size': '$likes' } })
         .sort({createdAt: -1})
         .skip( (page - 1) * limit ).limit(limit)
         .exec()

@@ -65,10 +65,10 @@ module.exports = function(server) {
   // DELETE /api/posts
 //  router.route('/post').delete(postService.deletePost)
 
-  // GET /api/posts
-  // GET /api/posts/:page
-  router.route('/feeds').get(postService.getFeeds)
-  router.route('/feeds/:page').get(postService.getFeeds)
+  // GET /api/posts/:userId
+  // GET /api/posts/:userId/:page
+  router.route('/feeds/:userId').get(postService.getFeeds)
+  router.route('/feeds/:userId/:page').get(postService.getFeeds)
   
   // POST /api/post/addLike
   router.route('/post/addLike').post(postService.addLike)
