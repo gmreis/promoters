@@ -11,7 +11,18 @@ const User = require('./../user/userModel');
 function addPost(req, res) {
 
     var newPost = new Post({
-        comment: req.body.comment,
+//        comment: req.body.comment,
+        isChallenge: req.body.isChallenge,
+        photos: [ req.file.filename ],
+
+        type: req.body.type,
+        brand: req.body.brand,
+        supermarket: req.body.supermarket,
+        store: req.body.store,
+
+        longitude: req.body.longitude,
+        latitude: req.body.latitude,
+
     });    
 
     User.findOne({faceId: req.body.faceId}).exec()
@@ -20,7 +31,7 @@ function addPost(req, res) {
                 throw 'Usuario não encontrado';
             
             newPost.userId = user._id;
-            newPost.photos = [ req.file.filename ];
+            newPost.userName = user.name;
 
             return newPost.save();
 
