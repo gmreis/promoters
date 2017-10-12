@@ -26,7 +26,9 @@ userSchema.virtual('getUser').get(function () {
       birth: this.birth,
       position: this.position,
       level: this.level,
-      points: this.points
+      points: this.points,
+      createAt: this.createAt
+
     };
 });
 
