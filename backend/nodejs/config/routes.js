@@ -1,7 +1,21 @@
 const express = require('express')
-const url = require('url')
+const multer  = require('multer')
+const mime = require('mime-types')
+
+// Multer Settings for file upload
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './upload')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + '.' + mime.extensions[file.mimetype])
+  }
+})
+let upload = multer({ storage: storage })
 
 module.exports = function(server) {
+
+  server.use('/upload', express.static('upload'));
 
   server.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
@@ -39,13 +53,10 @@ module.exports = function(server) {
   // PUT /api/user
   router.route('/user').put(userService.editUser)
 
-  // POST /api/users/authenticate
-//  router.route('/users/authenticate').post(userService.authenticate)
-
   const postService = require('../api/post/postService')
 
   // POST /api/post
-  router.route('/post').post(postService.addPost)
+  router.route('/post').post(upload.single('photo'), postService.addPost)
 
   // GET /api/post/:id
   router.route('/post/:id').get(postService.findPostById)
