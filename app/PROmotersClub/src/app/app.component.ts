@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Config, Nav, Platform, LoadingController } from 'ionic-angular';
+import { Config, Nav, Platform, LoadingController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,9 +22,10 @@ import { Facebook } from '@ionic-native/facebook';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any = FeedPage;
 
-  pages: Array<{title: string, icone: string, component: any}>;
+  pages: Array<{title: string, icone: string, color: string, component: any}>;
+  userPhoto: any;
 
   constructor(private translate: TranslateService,
       private facebook: Facebook,
@@ -32,6 +33,7 @@ export class MyApp {
       private LocalDb: LocalDb,
       private SessionProvider: SessionProvider,
       private config: Config, 
+      public event: Events, 
       public platform: Platform, 
       public statusBar: StatusBar, 
       public splashScreen: SplashScreen) {
@@ -42,15 +44,17 @@ export class MyApp {
       this.splashScreen.hide();
     });
     this.initTranslate();
-
+   
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'FEED_TITLE', icone: 'md-home',component: FeedPage },
-      { title: 'CHALLENGE_TITLE', icone: 'md-checkmark', component: ChallengePage },
-      { title: 'INBOX_TITLE', icone: 'ios-filing-outline', component: FeedPage },
-      { title: 'CONFIG_TITLE', icone: 'md-settings', component: SettingsPage },
-      { title: 'PERFIL_TITLE', icone: 'md-person', component: PerfilPage }
+      { title: 'FEED_TITLE', icone: 'md-home', color: '',component: FeedPage },
+      { title: 'CHALLENGE_TITLE', icone: 'md-star', color: 'orange', component: ChallengePage },
+      { title: 'INBOX_TITLE', icone: 'ios-filing-outline', color: '',component: FeedPage },
+      { title: 'CONFIG_TITLE', icone: 'md-settings', color: '',component: SettingsPage },
+      { title: 'PERFIL_TITLE', icone: 'md-person', color: '',component: PerfilPage }
     ];
+
+    this.event.subscribe("user:login", () => { this.userPhoto = this.SessionProvider.userData.photo });
 
   }
 
@@ -58,9 +62,9 @@ export class MyApp {
     // Set the default language for translation strings, and the current language.
     this.translate.setDefaultLang('pt-br');
 
-    if (this.translate.getBrowserLang() !== undefined) {
-      this.translate.use(this.translate.getBrowserLang());
-    }
+    // if (this.translate.getBrowserLang() !== undefined) {
+    //   this.translate.use(this.translate.getBrowserLang());
+    // }
 
     this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
       this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
@@ -80,9 +84,9 @@ export class MyApp {
     loadingPopup.present();
 
     /* TODO: colocar dentro de uma promise para o carregando fazer sentido */
+    this.LocalDb.deleteAllLocalStorage();
+    this.SessionProvider.deleteSession();
     this.facebook.logout().then(response => {
-        this.LocalDb.deleteAllLocalStorage();
-        this.SessionProvider.deleteSession();
         this.nav.setRoot(LoginPage);
         loadingPopup.dismiss();
     /* ---------------------------------- */

@@ -13,7 +13,7 @@ export class FeedPage {
 	private feedItems: any = [];
   teste2:any;
   constructor(public navCtrl: NavController,
-    public modalCtrl: ModalController,
+      public modalCtrl: ModalController,
       private LocalDb: LocalDb,
 
     private camera: Camera) {

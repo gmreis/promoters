@@ -9,6 +9,14 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 })
 export class CameramodalPage {
 
+  public postpdv = {
+    photo: '',
+    work_type: '',
+    market_net: '',
+    brand: '',
+    store: '',
+    isChallenge: false
+  }
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController,
@@ -23,13 +31,15 @@ export class CameramodalPage {
   }
 
   dismiss() {
-    // let data = { 'foo': 'bar' };
-    // this.viewCtrl.dismiss(data);
     this.viewCtrl.dismiss();
   }
 
   ionViewDidLoad() {
 
+  }
+
+  publicarPost(postpdv){
+    console.log("Teste "+JSON.stringify(postpdv));
   }
 
   testeCam(){

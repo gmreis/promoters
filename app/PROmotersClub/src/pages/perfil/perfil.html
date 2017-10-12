@@ -14,7 +14,7 @@
     </ion-avatar>
     <div class="perfil_nome">
       <span>{{user.name}}</span>
-      <span>{{'PERFIL_MEMBER' | translate}} {{user.memberDate}}</span>
+      <span>{{'PERFIL_MEMBER' | translate}} {{ month | translate}} / {{ year }}</span>
     </div>
   </div>
 
@@ -23,7 +23,7 @@
       <span>{{'PERFIL_LEVEL' | translate}}:</span>   <span>{{user.level}}</span>
     </div>
     <div class="perfil_rank">
-      <span>{{'PERFIL_POSITION' | translate}}:</span><span>{{user.position}}</span>
+      <span>{{'PERFIL_POSITION' | translate}}:</span><span >{{user.position == 0 ? " - " : user.position}}</span>
     </div>
     <div class="perfil_rank">
       <span>{{'PERFIL_POINTS' | translate}}:</span>  <span>{{user.points}}</span>
@@ -35,7 +35,7 @@
       <div class="perfil_rank_item">
         <div class="item_img">
           <ion-avatar>
-            <img src="../../assets/img/img/avatar-yoda.png">
+            <img src="assets/img/img/avatar-yoda.png">
           </ion-avatar>
         </div>
         <div class="item_text">
@@ -48,7 +48,7 @@
       <div class="perfil_rank_item">
         <div class="item_img">
           <ion-avatar>
-            <img src="../../assets/img/img/avatar-yoda.png">
+            <img src="assets/img/img/avatar-yoda.png">
           </ion-avatar>
         </div>
         <div class="item_text">
@@ -61,7 +61,7 @@
       <div class="perfil_rank_item">
         <div class="item_img">
           <ion-avatar>
-            <img src="../../assets/img/img/avatar-yoda.png">
+            <img src="assets/img/img/avatar-yoda.png">
           </ion-avatar>
         </div>
         <div class="item_text">

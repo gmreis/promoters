@@ -11,6 +11,9 @@ import { SessionProvider } from '../../providers/session/session';
 export class PerfilPage {
 
   user:any;
+  private months = ["M_JAN","M_FEB","M_MAR","M_APRIL","M_May","M_JUNE","M_JULY","M_AUGUST","M_SEPTEMBER","M_OCTOBER","M_NOVEMBER","M_DECEMBER"];
+  month:any;
+  year:any;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -18,14 +21,20 @@ export class PerfilPage {
     private sessionProvider: SessionProvider
     ) {
 
-    this.user = {
-      photo: "../../assets/img/img/avatar-luke.png",
-      name: "Mario Gomes",
-      memberDate: "Set/2014",
-      level: "Futuro Rock star",
-      position: 12,
-      points: 30.123
+    this.user = this.sessionProvider.userData;
+    if(this.user.createdAt){
+      this.month = this.months[new Date(this.user.createdAt).getMonth()];
+      this.year = new Date(this.user.createdAt).getFullYear();
     }
+   
+    // this.user = {
+    //   photo: "assets/img/img/avatar-luke.png",
+    //   name: "Mario Gomes",
+    //   memberDate: "Set/2014",
+    //   level: "Futuro Rock star",
+    //   position: 12,
+    //   points: 30.123
+    // }
   }
 
   ionViewDidLoad() {

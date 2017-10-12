@@ -5,7 +5,7 @@
     </button>
     <ion-title>{{ 'FEED_TITLE' | translate }}</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="teste()">
+      <button ion-button icon-only (click)="openModal()">
         <ion-icon name="md-camera"></ion-icon>
       </button>
     </ion-buttons>
@@ -13,7 +13,6 @@
 </ion-header>
 
 <ion-content>
-  {{teste2}}
   <ion-card *ngFor="let feedItem of feedItems">
     <ion-item>
       <ion-avatar item-start>

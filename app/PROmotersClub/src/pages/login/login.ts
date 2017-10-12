@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { NavController, AlertController, Platform, LoadingController } from 'ionic-angular';
+import { NavController, AlertController, Platform, LoadingController, Events } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { HttpHeaders } from '@angular/common/http';
 
@@ -21,6 +21,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController,
       public alertCtrl: AlertController,
       public translateService: TranslateService,
+      public event: Events,
       private platform: Platform,
       private facebook: Facebook,
       private LocalDb: LocalDb,
@@ -43,17 +44,19 @@ export class LoginPage {
     });
     loadingPopup.present();
 
-    this.LocalDb.get('islogged').then( (isLogged) => {
-        if(isLogged == true){
+    this.LocalDb.get('userData').then( (userdatafromdevice) => {
+        if(userdatafromdevice){
             //Salva no device flag logado
-            this.SessionProvider.islogged = true;
+            this.SessionProvider.userData = userdatafromdevice;
 
             //Busca dos dados do usuarios
-            this.LocalDb.get('userdata').then( (userdatafromdevice) => {
+            this.LocalDb.get('islogged').then( (isLogged) => {
               //Salva no device os dados do usuario
-              this.SessionProvider.userData = userdatafromdevice;
+              this.SessionProvider.islogged = true;
+
               loadingPopup.dismiss();
               //Direciona para pagina home
+              this.event.publish("user:login");
               this.navCtrl.setRoot(FeedPage);
             },
             (error) => {
@@ -73,7 +76,10 @@ export class LoginPage {
   }
 
   loginFacebook() {
-
+    let loadingPopup = this.loadingCtrl.create({
+      content: 'Carregando...'
+    });
+    loadingPopup.present();
     //Garante que o usaurio esteja deslogado antes de logar
     this.logoutFacebook();
   
@@ -90,17 +96,22 @@ export class LoginPage {
         this.signupFacebook(user).then(data => {
           //Se gravou os dados, direciona para homepage
           if(data == true) {
+
             this.navCtrl.setRoot(FeedPage);
+            loadingPopup.dismiss();
           }
         }, err => {
           this.simpleAlert('Erro', '', 'Erro ao persistir os dados no banco!');
+          loadingPopup.dismiss();
         });
 
       }, error => {
         this.simpleAlert('Erro', '', 'Erro buscar dados no Facebook!');
+        loadingPopup.dismiss();
       });
     }).catch((e) => {
       this.simpleAlert('Erro', '', 'Error logging into Facebook!');
+      loadingPopup.dismiss();
       console.log('Error logging into Facebook', e)
     });
   }
@@ -122,26 +133,38 @@ export class LoginPage {
       if (!user.birthday) {
         user.birthday = '';
       }
-
+      var newUser = {  
+        "faceId": user.id,
+        "name": user.name,
+        "sexo": user.gender,
+        "photo": user.picture.data.url
+        // "birth": user.birthday,
+        // "fbToken": user.facebooktoken,
+        // "fbExpire": user.facebookexpiresin
+      }
       var headers = new HttpHeaders().set('Content-Type', 'application/json');
-      this.api.post("user", user, { headers: headers, observe: 'response' }).subscribe((res: any) => {
-        if (res.status === 200) {
+      this.api.post("user", newUser, { headers: headers, observe: 'response' }).subscribe((res: any) => {
+        // this.simpleAlert('Erro', '', 'teste '+ JSON.stringify(res));
 
+        if (res.status == 200) {
           /* Salva na memória do dispositivo */
-          this.LocalDb.set('userdata', res.body.user);
+          this.LocalDb.set('userData', res.body);
           this.LocalDb.set('islogged', true);
           /* Salva na memória na sessão do app */
-          this.SessionProvider.userData = res.body.user;
+          this.SessionProvider.userData = res.body;
           this.SessionProvider.islogged = true;
+
+          this.event.publish("user:login");
+          
           /* Direciona para a Home */
           resolve(true);
         } else {
           this.simpleAlert('Erro', '', 'Problema ao autenticar no servidor. code: '+res.status);
         }
       }, error => { 
-        console.log("TEst "+JSON.stringify(error))
-
-        this.simpleAlert('Erro', '', 'Não foi possível estabelecer uma conexão com o servidor. Verifique sua conexão.'); });
+          console.log("TEst "+JSON.stringify(error));
+          this.simpleAlert('Erro', '', 'Não foi possível '+ JSON.stringify(error));
+         });
     });
   }
 

@@ -23,7 +23,7 @@
             <ion-icon name='md-pin'></ion-icon>
           </div>
           <div class="challenge-text">
-            <span>{{ 'CHALLENGEWORK_TYPE' | translate }}</span>
+            <span>{{ 'CHALLENGE_WORKTYPE' | translate }}</span>
             <span>PDV</span>
           </div>
         </ion-col>
@@ -57,14 +57,20 @@
           </div>
         </ion-col>
       </ion-row>
+
+      <ion-row>
+        <ion-col col-9 class="teste">
+          <button ion-button full color="secondary">
+            <ion-icon name="md-thumbs-up"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col col-3>
+          <button ion-button full>
+            <ion-icon name="md-arrow-round-forward"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
     </ion-grid>
-    <div class="challenge-buttons">
-      <button ion-button clear icon-only>
-        <ion-icon name="md-close-circle"></ion-icon>
-      </button>
-      <button ion-button clear icon-only >
-        <ion-icon name="md-checkmark-circle"></ion-icon>
-      </button>
-    </div>
+   
   </div>
 </ion-content>
