@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
 
-function getPoints() {
-  return 123;
-}
-
 const userSchema = new mongoose.Schema({
   faceId: { type: String, required: true, index: {unique: true} },
   name: { type: String, required: true },
@@ -12,12 +8,12 @@ const userSchema = new mongoose.Schema({
   birth: { type: Date, default: null },
   position: { type: Number, default: 0 },
   level: { type: Number, default: 0 },
-  points: { type: Number, default: 0 },
-  premios: {
+  points: { type: Number, default: 50 },
+  premios: [{
     icon: { type: String, default: "/img/algo.png" },
     title: { type: String, default: "You ROCK!" },
     description: { type: String, default: "100% de aprovação no PROMov Club" },
-  }
+  }]
 }, { timestamps: true });
 
 
@@ -39,4 +35,16 @@ userSchema.virtual('getUser').get(function () {
 
 const User = mongoose.model('User', userSchema);
 
+User.addPoint = (post, points ) => {
+  return new Promise(resolve => {
+    
+      // Busca o dono do Post e adiciona +1 Ponto
+      User.findById(post.userId).exec()
+          .then(user => {
+            user.points += points;
+            user.save()
+            .then( user => resolve( post.save() ) );
+          });
+    })
+};
 module.exports = User;

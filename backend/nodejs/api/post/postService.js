@@ -33,7 +33,8 @@ function addPost(req, res) {
             newPost.userId = user._id;
             newPost.userName = user.name;
 
-            return newPost.save();
+            //return newPost.save();
+            return User.addPoint(newPost, 10);
 
         })
         .then(() => {
@@ -72,21 +73,11 @@ function addLike(req, res) {
             let likes = post.likes.length;
             post.likes.addToSet(_user._id);
 
-            // Adiciona +1 Ponto para o Proprietario do Post
+            // Adiciona +5 Ponto para o Proprietario do Post
             // Se o usuário já não tiver dado like para esse Post
             if(post.likes.length > likes) {
 
-                return new Promise(resolve => {
-                    
-                    // Busca o dono do Post e adiciona +1 Ponto
-                    User.findById(post.userId).exec()
-                        .then(user => {
-
-                            user.points++;
-                            user.save()
-                            .then(user => resolve( post.save() ) );
-                        });
-                })
+                return User.addPoint(post, 5);
                 
             }
             
