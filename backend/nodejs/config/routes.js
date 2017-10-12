@@ -1,6 +1,5 @@
 const express = require('express')
 const multer  = require('multer')
-const mime = require('mime-types')
 
 // Multer Settings for file upload
 const storage = multer.diskStorage({
@@ -8,7 +7,7 @@ const storage = multer.diskStorage({
     cb(null, './upload')
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + '.' + mime.extensions[file.mimetype])
+    cb(null, file.fieldname + '-' + Date.now() + '.' + file.originalname.split('.').pop())
   }
 })
 let upload = multer({ storage: storage })
