@@ -59,7 +59,7 @@ function addPost(req, res) {
 
             // -27.449017, -48.460939
             // -27.592227, -48.610541
-            return geocoder.reverse({lat: req.body.longitude,  lon: req.body.latitude})
+            return geocoder.reverse({lat: req.body.latitude,  lon: req.body.longitude})
 
         })
         .then((geoddress) => {
@@ -85,7 +85,7 @@ function addPost(req, res) {
             res.status(200).end(JSON.stringify(newPost));
         })
         .catch(err => {
-            console.log('Fudeu', err);
+            console.log('addPost', err);
             var errors = {};
             for (var error in err.errors) {
                 errors[error] = (err.errors[error]['message']);
