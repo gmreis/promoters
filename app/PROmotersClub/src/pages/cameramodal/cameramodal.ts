@@ -38,8 +38,7 @@ export class CameramodalPage {
     private SessionProvider: SessionProvider,
     private camera: Camera,
     private transfer: FileTransfer,
-    private file: File,
-    private DomSanitizer: DomSanitizer
+    private file: File
     ) {
 
     
