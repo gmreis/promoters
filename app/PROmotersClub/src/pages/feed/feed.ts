@@ -1,55 +1,30 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, ModalOptions } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { NavController, ModalController, ModalOptions, AlertController } from 'ionic-angular';
 import { CameramodalPage } from '../cameramodal/cameramodal';
 import { LocalDb } from '../../providers/local-db/local-db';
+import { HttpHeaders } from '@angular/common/http';
+import { Api } from '../../providers/api/api';
+import { SessionProvider } from '../../providers/session/session';
 
 @Component({
   selector: 'page-feed',
   templateUrl: 'feed.html'
 })
 export class FeedPage {
+  private teste: any = false;
 
-	private feedItems: any = [];
-  teste2:any;
+  private feedItems: any = [];
+	private feedPage: any = 1;
+
   constructor(public navCtrl: NavController,
       public modalCtrl: ModalController,
+      public alertCtrl: AlertController,
+      private api: Api,
       private LocalDb: LocalDb,
-
-    private camera: Camera) {
-
-  	this.feedItems = [{
-      avatarURL: 'assets/img/img/marty-avatar.png',
-      imgURL: 'assets/img/img/advance-card-bttf.png',
-      userName: 'Marty McFly',
-      location: 'Angeloni - Florianopolis/SC',
-      likes: 12,
-      comments: 4
-    },
-    {
-      avatarURL: 'assets/img/img/sarah-avatar.png.jpeg',
-      imgURL: 'assets/img/img/advance-card-tmntr.jpg',
-      userName: 'Sarah Connor',
-      location: 'Big - Florianopolis/SC',
-      likes: 30,
-      comments: 64
-    },
-    {
-      avatarURL: 'assets/img/img/ian-avatar.png',
-      imgURL: 'assets/img/img/advance-card-jp.jpg',
-      userName: 'Dr. Ian Malcolm',
-      location: 'Imperatriz - Florianopolis/SC',
-      likes: 46,
-      comments: 66
-    },
-    {
-      avatarURL: 'assets/img/img/avatar-ts-potatohead.png',
-      imgURL: 'assets/img/img/advance-card-machu-picchu-1.jpg',
-      userName: 'Batata',
-      location: 'Hippo - Florianopolis/SC',
-      likes: 24,
-      comments: 41
-    }]
+      private sessionProvider: SessionProvider
+      ) {
+    this.feedPage = 1;
+    this.loadFeedItem();
   }
 
   openModal() {
@@ -60,31 +35,55 @@ export class FeedPage {
     myModal.present();
   }
 
-  teste(){
-             console.log("teste1 ");
-
-    this.LocalDb.get('userTest').then( (teste) => {
-        this.teste2 = JSON.stringify(teste);
-             console.log("teste ");
-             console.log("teste "+JSON.stringify(teste));
-            });
+  loadFeedItem(){
+    var headers = new HttpHeaders().set('Content-Type', 'application/json');
+    var endURL = "feeds/1441063662635886/1";
+    // var endURL = "feeds/"+this.sessionProvider.userData.faceId+"/1";
+    this.api.get(endURL, { headers: headers, observe: 'response' }).subscribe((res: any) => {
+      this.feedItems = res.posts;
+    }, error => { 
+        this.simpleAlert('Erro', '', 'Não foi possível estabelecer uma conexão com o servidor. Verifique sua conexão.');
+    });
   }
 
-  testeCam(){
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      saveToPhotoAlbum: true
-    }
+  doRefresh(refresher) {
+    var headers = new HttpHeaders().set('Content-Type', 'application/json');
+    var endURL = "feeds/1441063662635886/1";
+    // var endURL = "feeds/"+this.sessionProvider.userData.faceId+"/1";
+    this.api.get(endURL, { headers: headers, observe: 'response' }).subscribe((res: any) => {
+      this.feedItems = res.posts;
+      refresher.complete();
+    }, error => { 
+        this.simpleAlert('Erro', '', 'Não foi possível estabelecer uma conexão com o servidor. Verifique sua conexão.');
+        refresher.complete();
 
-    this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     // If it's base64:
-     let base64Image = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
-     // Handle error
     });
+  }
+
+  doInfinite(event) {
+    return new Promise((resolve) => {
+      this.feedPage = this.feedPage+1;
+        var headers = new HttpHeaders().set('Content-Type', 'application/json');
+        var endURL = "feeds/1441063662635886/"+this.feedPage;
+        // var endURL = "feeds/"+this.sessionProvider.userData.faceId+"/1";
+        this.api.get(endURL, { headers: headers, observe: 'response' }).subscribe((res: any) => {
+        this.feedItems.push(...res.posts);
+        resolve();
+      }, error => { 
+          this.simpleAlert('Erro', '', 'Não foi possível estabelecer uma conexão com o servidor. Verifique sua conexão.');
+          resolve();
+      });
+    })
+    
+  }
+
+  simpleAlert(msgt, msgs, msg){
+    var alert = this.alertCtrl.create({
+      title: msgt,
+      subTitle: msgs,
+      message: msg,
+      buttons: [{ text: 'Ok' }]
+    });
+    alert.present();
   }
 }

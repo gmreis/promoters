@@ -31,42 +31,16 @@
   </ion-item>
   
   <ion-list>
-    <ion-item color="black">
+    <ion-item color="black" *ngFor="let item of user.premios">
       <div class="perfil_rank_item">
         <div class="item_img">
           <ion-avatar>
-            <img src="assets/img/img/avatar-yoda.png">
+            <img src="http://gmreis-eng-br.umbler.net/{{item.icon}}">
           </ion-avatar>
         </div>
         <div class="item_text">
-          <h2>Cher</h2>
-          <p>Ugh. As if.</p>
-        </div>
-      </div>
-    </ion-item>
-    <ion-item color="black">
-      <div class="perfil_rank_item">
-        <div class="item_img">
-          <ion-avatar>
-            <img src="assets/img/img/avatar-yoda.png">
-          </ion-avatar>
-        </div>
-        <div class="item_text">
-          <h2>Cher</h2>
-          <p>Ugh. As if.</p>
-        </div>
-      </div>
-    </ion-item>
-    <ion-item color="black">
-      <div class="perfil_rank_item">
-        <div class="item_img">
-          <ion-avatar>
-            <img src="assets/img/img/avatar-yoda.png">
-          </ion-avatar>
-        </div>
-        <div class="item_text">
-          <h2>Cher</h2>
-          <p>Ugh. As if.</p>
+          <h2>{{item.title}}</h2>
+          <p>{{item.description}}</p>
         </div>
       </div>
     </ion-item>

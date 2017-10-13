@@ -2,4 +2,13 @@ page-feed {
 	 .social-cards ion-col {
     padding: 0;
   }
+
+  ion-card {
+    position: relative;
+    text-align: center;
+  }
+
+  .card-img{
+    height: 25rem;
+  }
 }

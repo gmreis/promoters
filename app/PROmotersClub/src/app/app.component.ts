@@ -56,6 +56,8 @@ export class MyApp {
 
     this.event.subscribe("user:login", () => { this.userPhoto = this.SessionProvider.userData.photo });
 
+    //Verifica se esta logado
+    this.isLogged();
   }
 
   initTranslate() {
@@ -75,6 +77,45 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+   /* Verifica na memória do disposivito se o usuário já está logado */
+  isLogged() {
+    let loadingPopup = this.loadingCtrl.create({
+      content: 'Carregando...'
+    });
+    loadingPopup.present();
+
+
+    this.LocalDb.get('userData').then( (userdatafromdevice) => {
+        if(userdatafromdevice){
+            //Salva no device flag logado
+            this.SessionProvider.userData = userdatafromdevice;
+
+            //Busca dos dados do usuarios
+            this.LocalDb.get('islogged').then( (isLogged) => {
+              //Salva no device os dados do usuario
+              this.SessionProvider.islogged = true;
+
+              loadingPopup.dismiss();
+              //Direciona para pagina home
+              this.event.publish("user:login");
+              this.nav.setRoot(FeedPage);
+            },
+            (error) => {
+              loadingPopup.dismiss();
+              this.nav.setRoot(LoginPage);
+            });
+        } else {
+            //Fica na mesma pagina
+            //O usuario precisa logar
+            loadingPopup.dismiss();
+        }
+    },
+    (error) => {
+      loadingPopup.dismiss();
+      console.log(error);
+    });
   }
 
   logoutFacebook(){

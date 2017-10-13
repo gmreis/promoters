@@ -13,8 +13,8 @@
 </ion-header>
 
 <ion-content>
-  <div class="content-challenge">
-    <img class="challenge-photo" padding src="assets/img/img/advance-card-bttf.png">
+  <div *ngIf="desafioItems.length > 0; else noItemTemplate" class="content-challenge">
+    <img class="challenge-photo" padding src="http://gmreis-eng-br.umbler.net/upload/{{itemAtual.photos[0]}}">
     
     <ion-grid>
       <ion-row>
@@ -24,7 +24,7 @@
           </div>
           <div class="challenge-text">
             <span>{{ 'CHALLENGE_WORKTYPE' | translate }}</span>
-            <span>PDV</span>
+            <span>{{itemAtual.type}}</span>
           </div>
         </ion-col>
         <ion-col class="challenge-info">
@@ -33,7 +33,7 @@
           </div>
           <div class="challenge-text">
             <span>{{ 'CHALLENGE_SUPERMARKET' | translate }}</span>
-            <span>Hippo</span>
+            <span>{{itemAtual.supermarket}}</span>
           </div>
         </ion-col>
       </ion-row>
@@ -44,7 +44,7 @@
           </div>
           <div class="challenge-text">
             <span>{{ 'CHALLENGE_BRAND' | translate }}</span>
-            <span>Isabela</span>
+            <span>{{itemAtual.brand}}</span>
           </div>
         </ion-col>
         <ion-col class="challenge-info">
@@ -53,24 +53,28 @@
           </div>
           <div class="challenge-text">
             <span>{{ 'CHALLENGE_STORE' | translate }}</span>
-            <span>Hippo Coqueiros</span>
+            <span>{{itemAtual.store}}</span>
           </div>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col col-9 class="teste">
-          <button ion-button full color="secondary">
+          <button ion-button full color="secondary" (click)="like()">
             <ion-icon name="md-thumbs-up"></ion-icon>
           </button>
         </ion-col>
         <ion-col col-3>
           <button ion-button full>
-            <ion-icon name="md-arrow-round-forward"></ion-icon>
+            <ion-icon name="md-arrow-round-forward" (click)="next()"></ion-icon>
           </button>
         </ion-col>
       </ion-row>
     </ion-grid>
    
   </div>
+
+  <ng-template #noItemTemplate>
+        <h3>Sem novos post para você avaliar!</h3>
+  </ng-template>
 </ion-content>

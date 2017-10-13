@@ -8,7 +8,6 @@ import { FeedPage } from '../feed/feed';
 import { SessionProvider } from '../../providers/session/session';
 import { LocalDb } from '../../providers/local-db/local-db';
 import { Api } from '../../providers/api/api';
-import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'page-login',
@@ -29,50 +28,10 @@ export class LoginPage {
       private loadingCtrl: LoadingController,
       private SessionProvider: SessionProvider
     ) {
-      //Verifica se esta logado
-      this.isLogged();
 
       this.translateService.get('LOGIN_ERROR').subscribe((value) => {
         this.loginErrorString = value;
       })
-  }
-
-  /* Verifica na memória do disposivito se o usuário já está logado */
-  isLogged() {
-    let loadingPopup = this.loadingCtrl.create({
-      content: 'Carregando...'
-    });
-    loadingPopup.present();
-
-    this.LocalDb.get('userData').then( (userdatafromdevice) => {
-        if(userdatafromdevice){
-            //Salva no device flag logado
-            this.SessionProvider.userData = userdatafromdevice;
-
-            //Busca dos dados do usuarios
-            this.LocalDb.get('islogged').then( (isLogged) => {
-              //Salva no device os dados do usuario
-              this.SessionProvider.islogged = true;
-
-              loadingPopup.dismiss();
-              //Direciona para pagina home
-              this.event.publish("user:login");
-              this.navCtrl.setRoot(FeedPage);
-            },
-            (error) => {
-              loadingPopup.dismiss();
-              this.navCtrl.setRoot(LoginPage);
-            });
-        } else {
-            //Fica na mesma pagina
-            //O usuario precisa logar
-            loadingPopup.dismiss();
-        }
-    },
-    (error) => {
-      loadingPopup.dismiss();
-      this.simpleAlert('Erro', '', 'Houve um problema ao verificar o login.');
-    });
   }
 
   loginFacebook() {
@@ -151,6 +110,7 @@ export class LoginPage {
           this.LocalDb.set('userData', res.body);
           this.LocalDb.set('islogged', true);
           /* Salva na memória na sessão do app */
+
           this.SessionProvider.userData = res.body;
           this.SessionProvider.islogged = true;
 
@@ -162,9 +122,8 @@ export class LoginPage {
           this.simpleAlert('Erro', '', 'Problema ao autenticar no servidor. code: '+res.status);
         }
       }, error => { 
-          console.log("TEst "+JSON.stringify(error));
-          this.simpleAlert('Erro', '', 'Não foi possível '+ JSON.stringify(error));
-         });
+          this.simpleAlert('Erro', '', 'Não foi possível estabelecer uma conexão com o servidor. Verifique sua conexão.');
+      });
     });
   }
 

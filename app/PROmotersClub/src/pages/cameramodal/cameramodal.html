@@ -48,7 +48,7 @@
         <input type="checkbox" value="" name="isChallenge" id="isChallenge" [(ngModel)]="postpdv.isChallenge"/>
         <label for="isChallenge">{{ 'CHALLENGE_CHECKBOX' | translate }}</label>
       </div>
-      <button type="submit" id="publicar-button" class="pdv-form__submit">
+      <button type="submit" id="publicar-button" class="pdv-form__submit" disabled="{{!selectedImg}}">
         {{ 'CHALLENGE_BUTTON' | translate }}
       </button>
     </div>   
