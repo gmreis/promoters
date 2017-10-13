@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird');
 
-mongoose.set('debug', true)
+//mongoose.set('debug', true)
 
 const host = process.env.DATABASE_HOST || 'localhost';
 const port = process.env.DATABASE_PORT || '27017';

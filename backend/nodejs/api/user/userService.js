@@ -27,15 +27,15 @@ function login(req, res) {
                         birth: null,
                         premios: [
                             {
-                                icon: "/img/algo.png",
+                                icon: "/img/ico2.png",
                                 title: "You ROCK!",
                                 description: "100% de aprovação no PROMov Club",
                             }, {
-                                icon: "/img/algo2.png",
+                                icon: "/img/ico3.png",
                                 title: "You ROCK!",
                                 description: "100% de aprovação no PROMov Club"
                             }, {
-                                imgIcone: "/img/algo.png",
+                                imgIcone: "/img/ico1.png",
                                 title: "Primeiros Passos",
                                 description: "Seu primeiro trabalho publicado no PROMov Club"
                             }
