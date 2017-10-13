@@ -26,7 +26,11 @@ function addPost(req, res) {
         longitude: req.body.longitude,
         latitude: req.body.latitude,
 
-    });    
+    });
+    
+        newPost.title = req.body.title ? req.body.title: '';
+
+        newPost.isBlog = req.body.isBlog ? req.body.isBlog : false;
 
     User.findOne({faceId: req.body.faceId}).exec()
         .then(user => {
@@ -202,7 +206,7 @@ function getChallenge(req, res) {
                     'likes': { '$not': { '$in': [ user._id ] } },
                     'dislikes': { '$not': { '$in': [ user._id ] } }
             })
-//                .limit(limit)
+                .limit(limit)
                 .exec()
         })
         .then(posts => {

@@ -23,7 +23,10 @@ const postSchema = new mongoose.Schema({
 
   likes: [{ type: Schema.Types.ObjectId, ref: 'Users'}],
   dislikes: [{ type: Schema.Types.ObjectId, ref: 'Users'}],
-  comments: [commentSchema]
+  comments: [commentSchema],
+
+  isBlog: { type: Boolean, default: false },
+  title: { type: String }
 
 }, { timestamps: true });
 
