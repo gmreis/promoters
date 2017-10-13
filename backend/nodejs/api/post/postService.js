@@ -252,6 +252,9 @@ function getFeeds(req, res) {
         
                     likes: { '$size': '$likes'}, 
                     comments: 1,
+
+                    isBlog: 1,
+                    title: 1,
                     
                     createdAt: 1, 
                 })
