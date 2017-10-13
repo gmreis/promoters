@@ -26,7 +26,11 @@ function addPost(req, res) {
         longitude: req.body.longitude,
         latitude: req.body.latitude,
 
-    });    
+    });
+    
+        newPost.title = req.body.title ? req.body.title: '';
+
+        newPost.isBlog = req.body.isBlog ? req.body.isBlog : false;
 
     User.findOne({faceId: req.body.faceId}).exec()
         .then(user => {
@@ -53,7 +57,7 @@ function addPost(req, res) {
         })
 }
 
-// POST /api/posts/addLike
+// POST /api/post/addLike
 /*
     {
         faceId: Number,
@@ -97,42 +101,43 @@ function addLike(req, res) {
 
 }
 
-// POST /api/posts/removeLike
+// POST /api/post/addDislike
 /*
     {
         faceId: Number,
         postId: Text
     }
 */
-function removeLike(req, res) {
+function addDislike(req, res) {
     
     let _user;
-
-    User.findOne({faceId: req.body.faceId}).exec()
-        .then(user => {
-            if(!user)
-                throw 'Usuario não encontrado';
-            
-            _user = user;
-            return Post.findById(req.body.postId).exec();
-        })
-        .then((post) => {
-            if(!post)
-                throw 'Post não encontrado';
-            
-            post.likes.pull(_user._id);
-            return post.save();
-        })
-        .then(() => {
-            res.status(200).end();
-        })
-        .catch(err => {
-            var errors = {};
-            for (var error in err.errors) {
-                errors[error] = (err.errors[error]['message']);
-            };
-            res.status(400).end(JSON.stringify({errors}));
-        })
+    
+        User.findOne({faceId: req.body.faceId}).exec()
+            // Busca Usuario que dará o Like
+            .then(user => {
+                _user = user;
+                return Post.findById(req.body.postId).exec();
+    
+            }, err => {  throw 'Usuario não encontrado'; })
+            // Busca Post que receberá o Like
+            .then((post) => {
+                
+                let dislikes = post.dislikes.length;
+                post.dislikes.addToSet(_user._id);
+    
+                if(post.dislikes.length > dislikes) {
+                    return post.save();
+                }
+                
+                return new Promise(resolve => resolve(post));
+    
+            }, err => { throw 'Post não encontrado'; })
+            .then( post => {
+                res.status(200).end(JSON.stringify({ dislikes: post.dislikes.length }));
+            })
+            .catch(err => {
+                res.status(400).end(JSON.stringify({err}));
+            })
     
 }
 
@@ -172,7 +177,52 @@ function findPostById(req, res) {
 
 }
 
-// TODO: findAllPosts
+// GET /api/challenge/:faceId
+function getChallenge(req, res) {
+    
+    const limit = 5;
+    
+    User.findOne({faceId: req.params.faceId}).exec()
+        .then(user => {
+            return Post.aggregate()
+                .project({ 
+                    userId: 1,
+
+                    isChallenge: 1,
+                    photos: 1,
+
+                    type: 1,
+                    brand: 1,
+                    supermarket: 1,
+                    store: 1,
+
+                    likes: 1,
+                    dislikes: 1,
+
+                })
+                .match({
+                    'userId': { '$ne': user._id },
+                    'isChallenge': true,
+                    'isBlog': false,
+                    'likes': { '$not': { '$in': [ user._id ] } },
+                    'dislikes': { '$not': { '$in': [ user._id ] } }
+            })
+                .limit(limit)
+                .exec()
+        })
+        .then(posts => {
+            res.status(200).end(JSON.stringify({ posts }));
+        })
+        .catch(err => {
+            var errors = {};
+            for (var error in err.errors) {
+                errors[error] = (err.errors[error]['message']);
+            };
+            res.status(400).end(JSON.stringify({errors}));
+        });
+    
+}
+
 // GET /api/feeds/:faceId
 // GET /api/feeds/:faceId/:page
 function getFeeds(req, res) {
@@ -203,6 +253,9 @@ function getFeeds(req, res) {
         
                     likes: { '$size': '$likes'}, 
                     comments: 1,
+
+                    isBlog: 1,
+                    title: 1,
                     
                     createdAt: 1, 
                 })
@@ -226,6 +279,6 @@ function getFeeds(req, res) {
 
 module.exports = { 
     addPost, editPost, deletePost,
-    addLike, removeLike, 
-    findPostById,
+    addLike, addDislike, 
+    getChallenge,
     getFeeds }
