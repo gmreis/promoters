@@ -22,7 +22,7 @@ import { Facebook } from '@ionic-native/facebook';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = FeedPage;
+  rootPage: any = LoginPage;
 
   pages: Array<{title: string, icone: string, color: string, component: any}>;
   userPhoto: any;
