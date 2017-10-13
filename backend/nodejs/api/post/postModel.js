@@ -6,6 +6,7 @@ const commentSchema = require('./../comment/commentModel').schema;
 const postSchema = new mongoose.Schema({
   userId: { type: Schema.Types.ObjectId, required: true, ref: 'Users'},
   userName: { type: String, required: true},
+  userPhoto: { type: String, required: true},
   
   isChallenge: { type: Boolean, default: false },
   photos: { type: [String], validate: [photosMin, '{PATH} deve ter no minimo 1']},

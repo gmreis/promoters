@@ -35,6 +35,7 @@ function addPost(req, res) {
             
             newPost.userId = user._id;
             newPost.userName = user.name;
+            newPost.userPhoto = user.photo;
 
             //return newPost.save();
             return User.addPoint(newPost, 10);
@@ -186,7 +187,8 @@ function getFeeds(req, res) {
             return Post.aggregate()
                 .project({ 
                     userId: 1, 
-                    userName: 1,
+                    userName: 1, 
+                    userPhoto: 1, 
                     
                     isChallenge: 1,
                     photos: 1,
