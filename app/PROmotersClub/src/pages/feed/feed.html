@@ -23,7 +23,7 @@
           <img src="{{feedItem.userPhoto}}">
         </ion-avatar>
         <h2>{{feedItem.userName}}</h2>
-        <p><ion-icon name='md-pin'></ion-icon> {{feedItem.location}}</p>
+        <p><ion-icon name='md-pin'></ion-icon> {{feedItem.store}} - {{feedItem.address[0].city}}/{{feedItem.address[0].stateShort}}</p>
       </ion-item>
 
       <img class="card-img" src="http://gmreis-eng-br.umbler.net/upload/{{feedItem.photos[0]}}">

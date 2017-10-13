@@ -26,6 +26,7 @@ import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { Geolocation } from '@ionic-native/geolocation';
+import { SwingModule } from 'angular2-swing';
 
 
 // The translate loader needs to know where to load i18n files
@@ -47,6 +48,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     BrowserModule,
     HttpClientModule,
+    SwingModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

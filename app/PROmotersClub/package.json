@@ -30,6 +30,7 @@
         "@ionic/storage": "2.0.1",
         "@ngx-translate/core": "8.0.0",
         "@ngx-translate/http-loader": "^2.0.0",
+        "angular2-swing": "^0.14.0",
         "cordova-android": "^6.2.3",
         "cordova-browser": "^4.1.0",
         "cordova-ios": "^4.4.0",
