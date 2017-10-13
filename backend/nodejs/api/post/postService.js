@@ -129,7 +129,7 @@ function addDislike(req, res) {
     
             }, err => { throw 'Post não encontrado'; })
             .then( post => {
-                res.status(200).end(JSON.stringify({ likes: post.dislikes.length }));
+                res.status(200).end(JSON.stringify({ dislikes: post.dislikes.length }));
             })
             .catch(err => {
                 res.status(400).end(JSON.stringify({err}));
