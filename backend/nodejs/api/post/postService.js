@@ -228,6 +228,8 @@ function getChallenge(req, res) {
                     isChallenge: 1,
                     photos: 1,
 
+                    isBlog: 1,
+
                     type: 1,
                     brand: 1,
                     supermarket: 1,
@@ -240,9 +242,9 @@ function getChallenge(req, res) {
                 .match({
                     'userId': { '$ne': user._id },
                     'isChallenge': true,
-                    'isBlog': false,
                     'likes': { '$not': { '$in': [ user._id ] } },
-                    'dislikes': { '$not': { '$in': [ user._id ] } }
+                    'dislikes': { '$not': { '$in': [ user._id ] } },
+                    'isBlog': false,
             })
                 .limit(limit)
                 .exec()
@@ -293,6 +295,8 @@ function getFeeds(req, res) {
 
                     isBlog: 1,
                     title: 1,
+
+                    address: 1,
                     
                     createdAt: 1, 
                 })
