@@ -5,6 +5,7 @@ import { Api } from '../../providers/api/api';
 import { SessionProvider } from '../../providers/session/session';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import { Geolocation } from '@ionic-native/geolocation';
 
 declare var cordova: any;
 
@@ -25,8 +26,10 @@ export class CameramodalPage {
     store: '',
     isChallenge: false,
     faceId: '',
-    longitude: '123123',
-    latitude: '3123123'
+    // longitude: '-27.606280',
+    // latitude: '-48.624690'
+    longitude: 0,
+    latitude: 0
   }
   constructor(
     public navCtrl: NavController,
@@ -37,6 +40,7 @@ export class CameramodalPage {
     private api: Api,
     private SessionProvider: SessionProvider,
     private camera: Camera,
+    private geolocation: Geolocation,
     private transfer: FileTransfer,
     private file: File
     ) {
@@ -46,6 +50,14 @@ export class CameramodalPage {
 
   ionViewDidEnter(){
     this.postpdv.faceId = this.SessionProvider.userData.faceId;
+    this.geolocation.getCurrentPosition().then(res => {
+
+      this.postpdv.latitude = res.coords.latitude;
+      this.postpdv.longitude = res.coords.longitude;
+    }).catch((error) => {
+      this.presentToast('Error getting location.');
+      console.log('Error getting location', error);
+    });
   }
 
   dismiss() {
@@ -174,6 +186,7 @@ export class CameramodalPage {
       content: 'Uploading...',
     });
     this.loading.present();
+      this.simpleAlert('teste', '', JSON.stringify(this.postpdv));
    
     // Use the FileTransfer to upload the image
     fileTransfer.upload(targetPath, url, options).then(data => {

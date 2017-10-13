@@ -25,6 +25,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
+import { Geolocation } from '@ionic-native/geolocation';
+
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -76,6 +78,7 @@ export function createTranslateLoader(http: HttpClient) {
     Api,
     SessionProvider,
     LocalDb,
+    Geolocation,
     // Keep this to enable Ionic's runtime error handling during development
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
