@@ -2,11 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, ViewController, AlertController, LoadingController, ToastController, Loading } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Api } from '../../providers/api/api';
-import { HttpHeaders } from '@angular/common/http';
 import { SessionProvider } from '../../providers/session/session';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
-import { DomSanitizer } from '@angular/platform-browser';
 
 declare var cordova: any;
 
@@ -182,6 +180,7 @@ export class CameramodalPage {
     fileTransfer.upload(targetPath, url, options).then(data => {
       this.loading.dismissAll()
        this.presentToast('Image succesful uploaded.');
+       this.dismiss();
     }, err => {
       this.loading.dismissAll()
       this.presentToast('Error while uploading file.');

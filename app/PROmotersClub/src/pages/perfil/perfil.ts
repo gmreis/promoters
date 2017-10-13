@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { SessionProvider } from '../../providers/session/session';
 
 
@@ -16,7 +16,6 @@ export class PerfilPage {
   year:any;
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
     public translate: TranslateService,
     private sessionProvider: SessionProvider
     ) {
@@ -26,6 +25,7 @@ export class PerfilPage {
       this.month = this.months[new Date(this.user.createdAt).getMonth()];
       this.year = new Date(this.user.createdAt).getFullYear();
     }
+    this.user.levelString = 'PERFIL_LEVEL_0';
    
     // this.user = {
     //   photo: "assets/img/img/avatar-luke.png",

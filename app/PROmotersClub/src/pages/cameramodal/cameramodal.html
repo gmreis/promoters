@@ -1,9 +1,9 @@
 <ion-header>
-        <ion-buttons right>
-            <button color="light" ion-button clear icon-only (click)="dismiss()">
-                <ion-icon name="close-circle"></ion-icon>
-            </button>
-        </ion-buttons>
+  <ion-buttons right>
+      <button color="light" ion-button clear icon-only (click)="dismiss()">
+          <ion-icon name="close-circle"></ion-icon>
+      </button>
+  </ion-buttons> 
 </ion-header>
 <ion-content class="modal_content">
   <form (ngSubmit)="publicarPost()">
@@ -11,8 +11,11 @@
       <img *ngIf="selectedImg; else falsyTemplate" src="{{imgPreview}}" alt="" on-tap="openPhotoLibrary()">
       <!-- <img *ngIf="postpdv.photo; else falsyTemplate" src="{{pathForImage(lastImage)}}" on-tap="openPhotoLibrary()"> -->
       <ng-template #falsyTemplate>
+      <div class="profile-image-placeholder">
         <ion-icon id="pdv_photo" name="images" on-tap="openCam()"></ion-icon>
-        <label for="pdv_photo" on-tap="openPhotoLibrary()">{{ 'CHALLENGE_CHOOSE_PHOTO' | translate }}</label>
+      </div>
+      <label for="pdv_photo" on-tap="openPhotoLibrary()">{{ 'CHALLENGE_CHOOSE_PHOTO' | translate }}</label>
+
       </ng-template>
     </div>
     <div padding class="pdv-form">
@@ -48,7 +51,7 @@
         <input type="checkbox" value="" name="isChallenge" id="isChallenge" [(ngModel)]="postpdv.isChallenge"/>
         <label for="isChallenge">{{ 'CHALLENGE_CHECKBOX' | translate }}</label>
       </div>
-      <button type="submit" id="publicar-button" class="pdv-form__submit" disabled="{{!selectedImg}}">
+      <button type="submit" id="publicar-button" class="pdv-form__submit">
         {{ 'CHALLENGE_BUTTON' | translate }}
       </button>
     </div>   

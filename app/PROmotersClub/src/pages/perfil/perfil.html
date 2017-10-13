@@ -20,7 +20,7 @@
 
   <ion-item no-lines color="black">
      <div class="perfil_rank">
-      <span>{{'PERFIL_LEVEL' | translate}}:</span>   <span>{{user.level}}</span>
+      <span>{{'PERFIL_LEVEL' | translate}}:</span>   <span>{{ user.level.levelString | translate}} {{user.level}}</span>
     </div>
     <div class="perfil_rank">
       <span>{{'PERFIL_POSITION' | translate}}:</span><span >{{user.position == 0 ? " - " : user.position}}</span>
@@ -35,7 +35,7 @@
       <div class="perfil_rank_item">
         <div class="item_img">
           <ion-avatar>
-            <img src="http://gmreis-eng-br.umbler.net/{{item.icon}}">
+            <img src="http://gmreis-eng-br.umbler.net{{item.icon}}">
           </ion-avatar>
         </div>
         <div class="item_text">

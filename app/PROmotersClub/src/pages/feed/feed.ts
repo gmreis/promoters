@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, ModalOptions, AlertController } from 'ionic-angular';
 import { CameramodalPage } from '../cameramodal/cameramodal';
-import { LocalDb } from '../../providers/local-db/local-db';
 import { HttpHeaders } from '@angular/common/http';
 import { Api } from '../../providers/api/api';
 import { SessionProvider } from '../../providers/session/session';
@@ -11,8 +10,6 @@ import { SessionProvider } from '../../providers/session/session';
   templateUrl: 'feed.html'
 })
 export class FeedPage {
-  private teste: any = false;
-
   private feedItems: any = [];
 	private feedPage: any = 1;
 
@@ -20,7 +17,6 @@ export class FeedPage {
       public modalCtrl: ModalController,
       public alertCtrl: AlertController,
       private api: Api,
-      private LocalDb: LocalDb,
       private sessionProvider: SessionProvider
       ) {
     this.feedPage = 1;
@@ -37,8 +33,8 @@ export class FeedPage {
 
   loadFeedItem(){
     var headers = new HttpHeaders().set('Content-Type', 'application/json');
-    var endURL = "feeds/1441063662635886/1";
-    // var endURL = "feeds/"+this.sessionProvider.userData.faceId+"/1";
+    // var endURL = "feeds/1441063662635886/1";
+    var endURL = "feeds/"+this.sessionProvider.userData.faceId+"/1";
     this.api.get(endURL, { headers: headers, observe: 'response' }).subscribe((res: any) => {
       this.feedItems = res.posts;
     }, error => { 
@@ -48,8 +44,8 @@ export class FeedPage {
 
   doRefresh(refresher) {
     var headers = new HttpHeaders().set('Content-Type', 'application/json');
-    var endURL = "feeds/1441063662635886/1";
-    // var endURL = "feeds/"+this.sessionProvider.userData.faceId+"/1";
+    // var endURL = "feeds/1441063662635886/1";
+    var endURL = "feeds/"+this.sessionProvider.userData.faceId+"/1";
     this.api.get(endURL, { headers: headers, observe: 'response' }).subscribe((res: any) => {
       this.feedItems = res.posts;
       refresher.complete();
@@ -64,8 +60,8 @@ export class FeedPage {
     return new Promise((resolve) => {
       this.feedPage = this.feedPage+1;
         var headers = new HttpHeaders().set('Content-Type', 'application/json');
-        var endURL = "feeds/1441063662635886/"+this.feedPage;
-        // var endURL = "feeds/"+this.sessionProvider.userData.faceId+"/1";
+        // var endURL = "feeds/1441063662635886/"+this.feedPage;
+        var endURL = "feeds/"+this.sessionProvider.userData.faceId+"/"+this.feedPage;
         this.api.get(endURL, { headers: headers, observe: 'response' }).subscribe((res: any) => {
         this.feedItems.push(...res.posts);
         resolve();

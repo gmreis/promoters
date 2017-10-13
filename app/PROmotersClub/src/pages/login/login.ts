@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { NavController, AlertController, Platform, LoadingController, Events } from 'ionic-angular';
+import { NavController, AlertController, LoadingController, Events } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { HttpHeaders } from '@angular/common/http';
 
@@ -21,7 +21,6 @@ export class LoginPage {
       public alertCtrl: AlertController,
       public translateService: TranslateService,
       public event: Events,
-      private platform: Platform,
       private facebook: Facebook,
       private LocalDb: LocalDb,
       private api: Api,

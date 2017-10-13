@@ -30,7 +30,7 @@ export class SettingsPage {
   }
 
   ionViewWillEnter() {
-    if(this.sessionProvider.userConfig !== undefined){
+    if(this.sessionProvider.userConfig.language){
       this.lingua = this.sessionProvider.userConfig.language;
     }else{
       this.lingua = "pt-br";

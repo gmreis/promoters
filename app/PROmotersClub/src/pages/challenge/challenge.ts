@@ -28,6 +28,20 @@ export class ChallengePage {
       ]
   };
 
+  itemDefault:any ={
+      "_id" : "",
+      "type" : "",
+      "brand" : "",
+      "supermarket" : "",
+      "store" : "",
+      "longitude" : "",
+      "latitude" : "",
+      "comments" : [],
+      "likes" : [],
+      "photos" : [ 
+          {"Photo": ''}
+      ]
+  };
   indexItem:any = 0;
 
   constructor(public navCtrl: NavController, 
@@ -52,13 +66,15 @@ export class ChallengePage {
   loadDesafioItems(){
     this.indexItem = 0;
     var headers = new HttpHeaders().set('Content-Type', 'application/json');
-    var endURL = "challenge/1441063662635886";
-    // var endURL = "challenge/"+this.sessionProvider.userData.faceId;
+    // var endURL = "challenge/1441063662635886";
+    var endURL = "challenge/"+this.sessionProvider.userData.faceId;
     this.api.get(endURL, { headers: headers, observe: 'response' }).subscribe((res: any) => {
-        this.desafioItems = res.posts;
-        if(this.desafioItems.length > 0){
-          this.itemAtual = this.desafioItems[0];
-        }
+          this.desafioItems = res.posts;
+          if(res.posts.length > 0){
+            this.itemAtual = this.desafioItems[0];
+          }else{
+            this.itemAtual = this.itemDefault;
+          }
       }, error => { 
           console.log(error);
           // this.simpleAlert('Erro', '', 'Não foi possível estabelecer uma conexão com o servidor. Verifique sua conexão.');
@@ -68,8 +84,8 @@ export class ChallengePage {
   like(){
     var headers = new HttpHeaders().set('Content-Type', 'application/json');
     var salvaPost = {
-      "faceId": "1441063662635886",
-      // "faceId": this.sessionProvider.userData.faceId,
+      // "faceId": "1441063662635886",
+      "faceId": this.sessionProvider.userData.faceId,
       "postId": this.itemAtual._id
     }
     this.api.post("post/addLike", salvaPost, { headers: headers, observe: 'response' }).subscribe((res: any) => {
@@ -82,8 +98,8 @@ export class ChallengePage {
   next(){
     var headers = new HttpHeaders().set('Content-Type', 'application/json');
     var salvaPost = {
-      "faceId": "1441063662635886",
-      // "faceId": this.sessionProvider.userData.faceId,
+      // "faceId": "1441063662635886",
+      "faceId": this.sessionProvider.userData.faceId,
       "postId": this.itemAtual._id
     }
     this.api.post("post/addDislike", salvaPost, { headers: headers, observe: 'response' }).subscribe((res: any) => {
@@ -98,7 +114,6 @@ export class ChallengePage {
     if(this.indexItem < this.desafioItems.length){
       this.itemAtual = this.desafioItems[this.indexItem];
     }else{
-      this.itemAtual = undefined;
       this.loadDesafioItems();
     }
   }

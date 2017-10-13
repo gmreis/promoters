@@ -24,11 +24,27 @@ page-cameramodal {
       display: flex;
       flex-direction: column;
       align-items: center;
+
+       .profile-image-placeholder {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        background-color: color($colors, orange, base);
+        width: 76px;
+        height: 76px;
+        border-radius: 50%;
+
+        font-size: 12px;
+
+        ion-icon {
+          font-size: 44px;
+          margin: auto;
+        }
+      }
     }
 
-    .button-photo > ion-icon{
-      font-size: 40px;
-    }
+
 
     .pdv-form__item {
       display: flex;

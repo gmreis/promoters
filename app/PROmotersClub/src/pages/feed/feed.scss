@@ -1,5 +1,11 @@
 page-feed {
-	 .social-cards ion-col {
+
+  ion-content{
+  background-color: color($colors, black, base)!important;
+
+  }
+
+	.social-cards ion-col {
     padding: 0;
   }
 
