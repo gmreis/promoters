@@ -203,6 +203,7 @@ function getChallenge(req, res) {
                 .match({
                     'userId': { '$ne': user._id },
                     'isChallenge': true,
+                    'isBlog': false,
                     'likes': { '$not': { '$in': [ user._id ] } },
                     'dislikes': { '$not': { '$in': [ user._id ] } }
             })
