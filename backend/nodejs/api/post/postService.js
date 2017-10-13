@@ -172,7 +172,35 @@ function findPostById(req, res) {
 
 }
 
-// TODO: findAllPosts
+// GET /api/challenge/:faceId
+function getChallenge(req, res) {
+    
+    const limit = 5;
+    
+    User.findOne({faceId: req.params.faceId}).exec()
+        .then(user => {
+            return Post.aggregate()
+                .project({ 
+                    isChallenge: 1,
+                    photos: 1,
+                })
+                .match({ 'userId': { '$ne': user._id }, 'isChallenge': true } )
+                .limit(limit)
+                .exec()
+        })
+        .then(posts => {
+            res.status(200).end(JSON.stringify({ posts }));
+        })
+        .catch(err => {
+            var errors = {};
+            for (var error in err.errors) {
+                errors[error] = (err.errors[error]['message']);
+            };
+            res.status(400).end(JSON.stringify({errors}));
+        });
+    
+}
+
 // GET /api/feeds/:faceId
 // GET /api/feeds/:faceId/:page
 function getFeeds(req, res) {
@@ -227,5 +255,5 @@ function getFeeds(req, res) {
 module.exports = { 
     addPost, editPost, deletePost,
     addLike, removeLike, 
-    findPostById,
+    getChallenge,
     getFeeds }

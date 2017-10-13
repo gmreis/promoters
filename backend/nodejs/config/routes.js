@@ -15,6 +15,7 @@ let upload = multer({ storage: storage })
 module.exports = function(server) {
 
   server.use('/upload', express.static('upload'));
+  server.use('/img', express.static('img'));
 
   server.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
@@ -57,7 +58,7 @@ module.exports = function(server) {
   router.route('/post').post(upload.single('photo'), postService.addPost)
 
   // GET /api/post/:id
-  router.route('/post/:id').get(postService.findPostById)
+//  router.route('/post/:id').get(postService.findPostById)
 
   // PUT /api/post
   router.route('/post').put(postService.editPost)
@@ -69,7 +70,10 @@ module.exports = function(server) {
   // GET /api/posts/:faceId/:page
   router.route('/feeds/:faceId').get(postService.getFeeds)
   router.route('/feeds/:faceId/:page').get(postService.getFeeds)
-  
+ 
+  // GET /api/challenge/:faceId
+  router.route('/challenge/:faceId').get(postService.getChallenge)
+
   // POST /api/post/addLike
   router.route('/post/addLike').post(postService.addLike)
 
