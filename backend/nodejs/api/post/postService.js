@@ -172,8 +172,8 @@ function findPostById(req, res) {
 }
 
 // TODO: findAllPosts
-// GET /api/feeds/:userId
-// GET /api/feeds/:userId/:page
+// GET /api/feeds/:faceId
+// GET /api/feeds/:faceId/:page
 function getFeeds(req, res) {
 
     const limit = 5;
@@ -181,32 +181,34 @@ function getFeeds(req, res) {
     var page = parseInt(req.params.page) || 1;
     page = page < 1 ? 1 : page;
     
-    Post.aggregate()
-        .project({ 
-            userId: 1, 
-            userName: 1,
-            
-            isChallenge: 1,
-            photos: 1,
-
-            type: 1,
-            brand: 1,
-            supermarket: 1,
-            store: 1,
-
-            longitude: 1,
-            latitude: 1,
-
-            likes: { '$size': '$likes'}, 
-            comments: 1,
-            
-            createdAt: 1, 
+    User.findOne({faceId: req.params.faceId}).exec()
+        .then(user => {
+            return Post.aggregate()
+                .project({ 
+                    userId: 1, 
+                    userName: 1,
+                    
+                    isChallenge: 1,
+                    photos: 1,
+        
+                    type: 1,
+                    brand: 1,
+                    supermarket: 1,
+                    store: 1,
+        
+                    longitude: 1,
+                    latitude: 1,
+        
+                    likes: { '$size': '$likes'}, 
+                    comments: 1,
+                    
+                    createdAt: 1, 
+                })
+                .match({ 'userId': { '$ne': user._id } } )
+                .sort({createdAt: -1})
+                .skip( (page - 1) * limit ).limit(limit)
+                .exec()
         })
-        .match({ 'userId': { '$ne': mongoose.Types.ObjectId(req.params.userId) } } )
-//        .group({ _id: '$_id', gostaram: { '$size': '$likes' } })
-        .sort({createdAt: -1})
-        .skip( (page - 1) * limit ).limit(limit)
-        .exec()
         .then(posts => {
             res.status(200).end(JSON.stringify({ posts }));
         })
