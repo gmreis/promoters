@@ -1,5 +1,13 @@
 # App PROmoters Club
 
+
+ionic cordova plugin add cordova-plugin-file-transfer
+npm install --save @ionic-native/file-transfer
+ionic cordova plugin add cordova-plugin-camera
+npm install --save @ionic-native/camera
+
+ionic cordova plugin add cordova-plugin-file
+npm install --save @ionic-native/file
 #### Facebook
 
 $ ionic cordova plugin add cordova-plugin-facebook4 --variable APP_ID="265027410685189" --variable APP_NAME="PROmotersClub"

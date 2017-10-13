@@ -23,6 +23,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { FileTransfer } from '@ionic-native/file-transfer';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -68,6 +70,8 @@ export function createTranslateLoader(http: HttpClient) {
     StatusBar,
     Facebook,
     Camera,
+    File,
+    FileTransfer,
     SplashScreen,
     Api,
     SessionProvider,
