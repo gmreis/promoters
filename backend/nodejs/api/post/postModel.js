@@ -20,6 +20,17 @@ const postSchema = new mongoose.Schema({
 
   longitude: { type: String, required: true},
   latitude: { type: String, required: true},
+  address: [ {
+        streetNumber: {type: String},
+        streetName: {type: String},
+        neighborhood: {type: String},
+        stateLong: {type: String},
+        stateShort: {type: String},
+        city: {type: String},
+        country: {type: String},
+        countryCode: {type: String},
+        zipcode: {type: String},
+      } ],
 
   likes: [{ type: Schema.Types.ObjectId, ref: 'Users'}],
   dislikes: [{ type: Schema.Types.ObjectId, ref: 'Users'}],

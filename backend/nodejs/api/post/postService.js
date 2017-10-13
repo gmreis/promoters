@@ -4,6 +4,22 @@ const Schema = mongoose.Schema;
 const Post = require('./postModel');
 const User = require('./../user/userModel');
 
+var NodeGeocoder = require('node-geocoder');
+
+const API_KEY = 'AIzaSyBY2qlQmAd_C3lPAEAPF4W7dz4LNZI37u8';
+
+var options = {
+    provider: 'google',
+
+    // Optional depending on the providers
+    httpAdapter: 'https', // Default
+    apiKey: API_KEY, // for Mapquest, OpenCage, Google Premier
+    formatter: null         // 'gpx', 'string', ...
+};
+   
+var geocoder = NodeGeocoder(options);
+
+
 // POST /api/posts
 /*
     {
@@ -28,9 +44,9 @@ function addPost(req, res) {
 
     });
     
-        newPost.title = req.body.title ? req.body.title: '';
+    newPost.title = req.body.title ? req.body.title: '';
 
-        newPost.isBlog = req.body.isBlog ? req.body.isBlog : false;
+    newPost.isBlog = req.body.isBlog ? req.body.isBlog : false;
 
     User.findOne({faceId: req.body.faceId}).exec()
         .then(user => {
@@ -41,14 +57,35 @@ function addPost(req, res) {
             newPost.userName = user.name;
             newPost.userPhoto = user.photo;
 
-            //return newPost.save();
-            return User.addPoint(newPost, 10);
+            // -27.449017, -48.460939
+            // -27.592227, -48.610541
+            return geocoder.reverse({lat: req.body.longitude,  lon: req.body.latitude})
 
+        })
+        .then((geoddress) => {
+
+            let address = geoddress.pop();
+            console.log('Address', address);
+
+            newPost.address = {
+                streetNumber: address.streetNumber,
+                streetName: address.streetName,
+                neighborhood: address.extra.neighborhood,
+                stateLong: address.administrativeLevels.level1long,
+                stateShort: address.administrativeLevels.level1short,
+                city: address.city,
+                country: address.country,
+                countryCode: address.countryCode,
+                zipcode: address.zipcode
+            };
+            
+            return User.addPoint(newPost, 10);
         })
         .then(() => {
             res.status(200).end(JSON.stringify(newPost));
         })
         .catch(err => {
+            console.log('Fudeu', err);
             var errors = {};
             for (var error in err.errors) {
                 errors[error] = (err.errors[error]['message']);
