@@ -97,42 +97,43 @@ function addLike(req, res) {
 
 }
 
-// POST /api/posts/removeLike
+// POST /api/posts/addDislike
 /*
     {
         faceId: Number,
         postId: Text
     }
 */
-function removeLike(req, res) {
+function addDislike(req, res) {
     
     let _user;
-
-    User.findOne({faceId: req.body.faceId}).exec()
-        .then(user => {
-            if(!user)
-                throw 'Usuario não encontrado';
-            
-            _user = user;
-            return Post.findById(req.body.postId).exec();
-        })
-        .then((post) => {
-            if(!post)
-                throw 'Post não encontrado';
-            
-            post.likes.pull(_user._id);
-            return post.save();
-        })
-        .then(() => {
-            res.status(200).end();
-        })
-        .catch(err => {
-            var errors = {};
-            for (var error in err.errors) {
-                errors[error] = (err.errors[error]['message']);
-            };
-            res.status(400).end(JSON.stringify({errors}));
-        })
+    
+        User.findOne({faceId: req.body.faceId}).exec()
+            // Busca Usuario que dará o Like
+            .then(user => {
+                _user = user;
+                return Post.findById(req.body.postId).exec();
+    
+            }, err => {  throw 'Usuario não encontrado'; })
+            // Busca Post que receberá o Like
+            .then((post) => {
+                
+                let dislikes = post.dislikes.length;
+                post.dislikes.addToSet(_user._id);
+    
+                if(post.dislikes.length > dislikes) {
+                    return post.save();
+                }
+                
+                return new Promise(resolve => resolve(post));
+    
+            }, err => { throw 'Post não encontrado'; })
+            .then( post => {
+                res.status(200).end(JSON.stringify({ likes: post.dislikes.length }));
+            })
+            .catch(err => {
+                res.status(400).end(JSON.stringify({err}));
+            })
     
 }
 
@@ -183,6 +184,12 @@ function getChallenge(req, res) {
                 .project({ 
                     isChallenge: 1,
                     photos: 1,
+
+                    type: 1,
+                    brand: 1,
+                    supermarket: 1,
+                    store: 1,
+
                 })
                 .match({ 'userId': { '$ne': user._id }, 'isChallenge': true } )
                 .limit(limit)
@@ -254,6 +261,6 @@ function getFeeds(req, res) {
 
 module.exports = { 
     addPost, editPost, deletePost,
-    addLike, removeLike, 
+    addLike, addDislike, 
     getChallenge,
     getFeeds }

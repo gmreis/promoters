@@ -22,6 +22,7 @@ const postSchema = new mongoose.Schema({
   latitude: { type: String, required: true},
 
   likes: [{ type: Schema.Types.ObjectId, ref: 'Users'}],
+  dislikes: [{ type: Schema.Types.ObjectId, ref: 'Users'}],
   comments: [commentSchema]
 
 }, { timestamps: true });

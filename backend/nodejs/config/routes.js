@@ -77,8 +77,8 @@ module.exports = function(server) {
   // POST /api/post/addLike
   router.route('/post/addLike').post(postService.addLike)
 
-  // POST /api/post/removeLike
-  router.route('/post/removeLike').post(postService.removeLike)
+  // POST /api/post/addDislike
+  router.route('/post/addDislike').post(postService.addDislike)
 
   const commentService = require('../api/comment/commentService')
 
