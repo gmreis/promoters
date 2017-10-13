@@ -1,6 +1,5 @@
 const express = require('express')
 const multer  = require('multer')
-const mime = require('mime-types')
 
 // Multer Settings for file upload
 const storage = multer.diskStorage({
@@ -8,7 +7,7 @@ const storage = multer.diskStorage({
     cb(null, './upload')
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + '.' + mime.extensions[file.mimetype])
+    cb(null, file.fieldname + '-' + Date.now() + '.' + file.originalname.split('.').pop())
   }
 })
 let upload = multer({ storage: storage })
@@ -20,7 +19,6 @@ module.exports = function(server) {
   server.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
 
-    //console.log("Olá Mundo...");
     // Website you wish to allow to connect
     res.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -67,10 +65,10 @@ module.exports = function(server) {
   // DELETE /api/posts
 //  router.route('/post').delete(postService.deletePost)
 
-  // GET /api/posts
-  // GET /api/posts/:page
-  router.route('/posts').get(postService.findAllPosts)
-  router.route('/posts/:page').get(postService.findAllPosts)
+  // GET /api/posts/:userId
+  // GET /api/posts/:userId/:page
+  router.route('/feeds/:userId').get(postService.getFeeds)
+  router.route('/feeds/:userId/:page').get(postService.getFeeds)
   
   // POST /api/post/addLike
   router.route('/post/addLike').post(postService.addLike)
