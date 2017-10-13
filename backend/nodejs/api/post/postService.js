@@ -53,7 +53,7 @@ function addPost(req, res) {
         })
 }
 
-// POST /api/posts/addLike
+// POST /api/post/addLike
 /*
     {
         faceId: Number,
@@ -97,7 +97,7 @@ function addLike(req, res) {
 
 }
 
-// POST /api/posts/addDislike
+// POST /api/post/addDislike
 /*
     {
         faceId: Number,
@@ -182,6 +182,8 @@ function getChallenge(req, res) {
         .then(user => {
             return Post.aggregate()
                 .project({ 
+                    userId: 1,
+
                     isChallenge: 1,
                     photos: 1,
 
@@ -190,9 +192,17 @@ function getChallenge(req, res) {
                     supermarket: 1,
                     store: 1,
 
+                    likes: 1,
+                    dislikes: 1,
+
                 })
-                .match({ 'userId': { '$ne': user._id }, 'isChallenge': true } )
-                .limit(limit)
+                .match({
+                    'userId': { '$ne': user._id },
+                    'isChallenge': true,
+                    'likes': { '$not': { '$in': [ user._id ] } },
+                    'dislikes': { '$not': { '$in': [ user._id ] } }
+            })
+//                .limit(limit)
                 .exec()
         })
         .then(posts => {
