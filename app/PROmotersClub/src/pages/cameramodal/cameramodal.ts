@@ -186,8 +186,6 @@ export class CameramodalPage {
       content: 'Uploading...',
     });
     this.loading.present();
-      this.simpleAlert('teste', '', JSON.stringify(this.postpdv));
-   
     // Use the FileTransfer to upload the image
     fileTransfer.upload(targetPath, url, options).then(data => {
       this.loading.dismissAll()
